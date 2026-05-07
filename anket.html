@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Müşteri Memnuniyet Anketi — ÆTERNA Sanat Galerisi</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* Anket sayfası özel stilleri */
+            .survey-page {
+                max-width: 800px;
+                margin: 100px auto 4rem;
+                padding: 0 4vw;
+                min-height: 60vh;
+            }
+            
+            .survey-page h1 {
+                font-family: 'Cinzel', serif;
+                font-size: 2.5rem;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
+            
+            .survey-page h1::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 2px;
+                background: var(--gold-dim);
+                margin: 0.5rem auto 0;
+            }
+            
+            .survey-page .subtitle {
+                color: var(--text-dim);
+                font-style: italic;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .survey-container {
+                background: var(--dark3);
+                border: 1px solid rgba(201,168,76,0.15);
+                border-radius: 16px;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+            
+            .form-group label {
+                display: block;
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 0.8rem;
+                font-weight: 600;
+            }
+            
+            .form-group input, 
+            .form-group select, 
+            .form-group textarea {
+                width: 100%;
+                background: var(--dark4);
+                border: 1px solid rgba(201,168,76,0.2);
+                border-radius: 8px;
+                padding: 0.8rem 1rem;
+                color: var(--cream);
+                font-family: var(--font-body);
+                font-size: 0.9rem;
+                transition: all 0.3s;
+            }
+            
+            .form-group input:focus, 
+            .form-group select:focus, 
+            .form-group textarea:focus {
+                outline: none;
+                border-color: var(--gold);
+            }
+            
+            .form-group input::placeholder, 
+            .form-group textarea::placeholder {
+                color: var(--text-dim);
+            }
+            
+            /* Radio grup stilleri */
+            .radio-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                background: var(--dark4);
+                padding: 0.8rem 1rem;
+                border-radius: 8px;
+                border: 1px solid rgba(201,168,76,0.2);
+            }
+            
+            .radio-option {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+            }
+            
+            .radio-option input[type="radio"] {
+                width: auto;
+                margin: 0;
+                accent-color: var(--gold);
+                cursor: pointer;
+            }
+            
+            .radio-option label {
+                margin: 0;
+                font-size: 0.85rem;
+                font-weight: normal;
+                text-transform: none;
+                letter-spacing: normal;
+                color: var(--text);
+                cursor: pointer;
+            }
+            
+            .radio-option:hover label {
+                color: var(--gold);
+            }
+            
+            /* Star rating stilleri */
+            .star-rating {
+                display: flex;
+                flex-direction: row-reverse;
+                gap: 0.5rem;
+                justify-content: flex-end;
+            }
+            
+            .star-rating input {
+                display: none;
+            }
+            
+            .star-rating label {
+                font-size: 1.8rem;
+                color: var(--text-dim);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            
+            .star-rating label:hover,
+            .star-rating label:hover ~ label,
+            .star-rating input:checked ~ label {
+                color: var(--gold);
+            }
+            
+            .submit-btn {
+                width: 100%;
+                background: var(--gold);
+                color: var(--dark);
+                border: none;
+                padding: 1rem;
+                font-family: 'Cinzel', serif;
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-top: 1rem;
+                border-radius: 8px;
+                font-weight: 600;
+            }
+            
+            .submit-btn:hover {
+                background: var(--gold-light);
+                transform: translateY(-2px);
+            }
+            
+            .thank-you {
+                display: none;
+                text-align: center;
+                padding: 3rem;
+                background: var(--dark3);
+                border: 1px solid rgba(201,168,76,0.15);
+                border-radius: 16px;
+            }
+            
+            .thank-you i {
+                font-size: 4rem;
+                color: var(--gold);
+                margin-bottom: 1rem;
+            }
+            
+            .thank-you h2 {
+                font-family: 'Cinzel', serif;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+            }
+            
+            .thank-you p {
+                color: var(--text-dim);
+                margin-bottom: 1.5rem;
+            }
+            
+            .thank-you button {
+                background: var(--gold);
+                color: var(--dark);
+                border: none;
+                padding: 0.8rem 2rem;
+                font-family: 'Cinzel', serif;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: all 0.3s;
+            }
+            
+            .thank-you button:hover {
+                background: var(--gold-light);
+                transform: translateY(-2px);
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="survey-page">
+            <h1 data-aos="fade-up">Müşteri Memnuniyet Anketi</h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Görüşleriniz bizim için çok değerli</p>
+            
+            <div class="survey-container" data-aos="fade-up" data-aos-delay="400">
+                <form id="surveyForm">
+                    <!-- Soru 1 -->
+                    <div class="form-group">
+                        <label for="q1">1. Genel alışveriş deneyiminizi nasıl değerlendirirsiniz?</label>
+                        <select id="q1" aria-label="1. Genel alışveriş deneyiminizi nasıl değerlendirirsiniz?" required>
+                            <option value="">Seçiniz...</option>
+                            <option>Çok memnun kaldım</option>
+                            <option>Memnun kaldım</option>
+                            <option>Kararsızım</option>
+                            <option>Memnun kalmadım</option>
+                        </select>
+                    </div>
+
+                    <!-- Soru 2 - Yıldızlı oylama -->
+                    <div class="form-group">
+                        <label id="label-rating">2. Sitemizin görsel tasarımını puanlayın (1-5 yıldız)</label>
+                        <div class="star-rating" role="group" aria-labelledby="label-rating">
+                            <input type="radio" name="rating" value="5" id="star5" aria-label="5 yıldız"><label for="star5">★</label>
+                            <input type="radio" name="rating" value="4" id="star4" aria-label="4 yıldız"><label for="star4">★</label>
+                            <input type="radio" name="rating" value="3" id="star3" aria-label="3 yıldız"><label for="star3">★</label>
+                            <input type="radio" name="rating" value="2" id="star2" aria-label="2 yıldız"><label for="star2">★</label>
+                            <input type="radio" name="rating" value="1" id="star1" aria-label="1 yıldız"><label for="star1">★</label>
+                        </div>
+                    </div>
+
+                    <!-- Soru 3 -->
+                    <div class="form-group">
+                        <label for="q3">3. Satın aldığınız eser beklentinizi karşıladı mı?</label>
+                        <textarea rows="3" placeholder="Yorumunuzu yazınız..." id="q3" aria-label="3. Satın aldığınız eser beklentinizi karşıladı mı?"></textarea>
+                    </div>
+
+                    <!-- Soru 4 -->
+                    <div class="form-group">
+                        <label for="q4">4. Kargo sürecinden memnun kaldınız mı?</label>
+                        <select id="q4" aria-label="4. Kargo sürecinden memnun kaldınız mı?" required>
+                            <option value="">Seçiniz...</option>
+                            <option>Çok memnun kaldım</option>
+                            <option>Memnun kaldım</option>
+                            <option>Kararsızım</option>
+                            <option>Memnun kalmadım</option>
+                        </select>
+                    </div>
+
+                    <!-- Soru 5 -->
+                    <div class="form-group">
+                        <label for="q5">5. Müşteri hizmetlerimiz size yardımcı oldu mu?</label>
+                        <select id="q5" aria-label="5. Müşteri hizmetlerimiz size yardımcı oldu mu?" required>
+                            <option value="">Seçiniz...</option>
+                            <option>Evet, çok yardımcı oldu</option>
+                            <option>Kısmen yardımcı oldu</option>
+                            <option>Hayır, yardımcı olmadı</option>
+                        </select>
+                    </div>
+
+                    <!-- Soru 6 -->
+                    <div class="form-group">
+                        <label for="q6">6. Tekrar alışveriş yapmayı düşünür müsünüz?</label>
+                        <select id="q6" aria-label="6. Tekrar alışveriş yapmayı düşünür müsünüz?" required>
+                            <option value="">Seçiniz...</option>
+                            <option>Evet, kesinlikle</option>
+                            <option>Belki</option>
+                            <option>Hayır</option>
+                        </select>
+                    </div>
+
+                    <!-- Öneri -->
+                    <div class="form-group">
+                        <label for="suggestion">Eklemek istediğiniz öneri veya yorumunuz var mı?</label>
+                        <textarea rows="3" placeholder="Önerileriniz bizim için değerli..." id="suggestion" aria-label="Eklemek istediğiniz öneri veya yorumunuz var mı?"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Gönder</button>
+                </form>
+
+                <div class="thank-you" id="thankYouMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Teşekkür Ederiz!</h2>
+                    <p>Görüşleriniz bizim için çok değerli.</p>
+                    <button onclick="window.location.href='siparislerim.html'">Siparişlerime Dön</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Galeri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p>
+                    <span>Güvenli Ödeme</span> · 
+                    <span>SSL Şifreli</span> · 
+                    <span>Orijinallik Garantili</span>
+                </p>
+            </div>
+        </footer>
+
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-8 8h5v8h6v-8h5z" fill="var(--dark)"/></svg>
+        </button>
+
+    <!-- DESTEK CHAT BUTONU -->
+            <button class="support-btn" id="supportBtn">
+                <i class="fas fa-headset"></i>
+            </button>
+
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-header">
+                    <i class="fas fa-headset"></i>
+                    <span>ÆTERNA Destek</span>
+                    <button class="close-chat" id="closeChat">✕</button>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message bot">
+                        Merhaba! Size nasıl yardımcı olabilirim?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                    <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div> 
+
+        <div class="toast" id="toast"></div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+            
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('aeterna_cart') || '[]');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) cartCountSpan.textContent = totalItems;
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+            
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+            
+            // Anket formu
+            const form = document.getElementById('surveyForm');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // Form verilerini kontrol et
+                    const q1 = document.getElementById('q1')?.value;
+                    const q4 = document.getElementById('q4')?.value;
+                    const q5 = document.getElementById('q5')?.value;
+                    const q6 = document.getElementById('q6')?.value;
+                    
+                    if (!q1 || !q4 || !q5 || !q6) {
+                        showToast('Lütfen tüm zorunlu alanları doldurun!');
+                        return;
+                    }
+                    
+                    form.style.display = 'none';
+                    thankYouMessage.style.display = 'block';
+                    
+                    // Anket cevaplarını localStorage'a kaydet (opsiyonel)
+                    const surveyData = {
+                        date: new Date().toISOString(),
+                        q1: q1,
+                        rating: document.querySelector('input[name="rating"]:checked')?.value,
+                        q3: document.getElementById('q3')?.value,
+                        q4: q4,
+                        q5: q5,
+                        q6: q6,
+                        suggestion: document.getElementById('suggestion')?.value
+                    };
+                    
+                    const allSurveys = JSON.parse(localStorage.getItem('aeterna_surveys') || '[]');
+                    allSurveys.push(surveyData);
+                    localStorage.setItem('aeterna_surveys', JSON.stringify(allSurveys));
+                });
+            }
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                updateCartCount();
+            });
+        </script>
+    <!-- Tab Sesli Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var lastFocused = null;
+        var usingKeyboard = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') usingKeyboard = true;
+        });
+        document.addEventListener('mousedown', function() {
+            usingKeyboard = false;
+        });
+
+        function speak(text) {
+            if (!text) return;
+            synth.cancel();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 1;
+            synth.speak(utt);
+        }
+
+        function getLabel(el) {
+            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+            var id = el.id;
+            if (id) {
+                var lbl = document.querySelector('label[for="' + id + '"]');
+                if (lbl) return lbl.innerText.trim();
+            }
+            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+            var text = (el.innerText || el.textContent || '').trim();
+            if (text) return text;
+            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+            return null;
+        }
+
+        document.addEventListener('focusin', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            var tag = el.tagName;
+            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+            if (el === lastFocused) return;
+            lastFocused = el;
+
+            // SELECT: soru metnini oku
+            if (tag === 'SELECT') {
+                var label = getLabel(el);
+                speak(label);
+                return;
+            }
+
+            // RADIO (yıldız): hem soru grubunu hem seçeneği oku
+            if (tag === 'INPUT' && el.type === 'radio') {
+                var groupLabel = '';
+                var group = el.closest('[role="group"]');
+                if (group) {
+                    var labelledBy = group.getAttribute('aria-labelledby');
+                    if (labelledBy) {
+                        var labelEl = document.getElementById(labelledBy);
+                        if (labelEl) groupLabel = labelEl.innerText.trim() + '. ';
+                    }
+                }
+                var optionLabel = el.getAttribute('aria-label') || '';
+                speak(groupLabel + optionLabel);
+                return;
+            }
+
+            var text = getLabel(el);
+            speak(text);
+        });
+
+        // SELECT: ok tuşuyla seçenek değişince seçeneği oku
+        document.addEventListener('change', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            if (el.tagName === 'SELECT' && el.selectedIndex > 0) {
+                speak(el.options[el.selectedIndex].text);
+            }
+        });
+
+        // SELECT: yukarı/aşağı ok tuşuyla gezerken de oku
+        document.addEventListener('keydown', function(e) {
+            var el = document.activeElement;
+            if (el && el.tagName === 'SELECT' && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+                setTimeout(function() {
+                    if (el.selectedIndex > 0) speak(el.options[el.selectedIndex].text);
+                }, 50);
+            }
+        });
+
+    })();
+    </script>
+    </body>
+</html>

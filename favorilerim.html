@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Favorilerim — ÆTERNA Sanat Galerisi</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* Favorilerim sayfası özel stilleri */
+            .favorites-page {
+                max-width: 1200px;
+                margin: 100px auto 4rem;
+                padding: 0 4vw;
+                min-height: 60vh;
+            }
+            
+            .favorites-page h1 {
+                font-family: 'Cinzel', serif;
+                font-size: 2.5rem;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+            }
+            
+            .favorites-page h1::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 2px;
+                background: var(--gold-dim);
+                margin-top: 0.5rem;
+            }
+            
+            .favorites-page .subtitle {
+                color: var(--text-dim);
+                font-style: italic;
+                margin-bottom: 2rem;
+            }
+            
+            .empty-favorites {
+                text-align: center;
+                padding: 4rem;
+                background: var(--dark3);
+                border-radius: 12px;
+            }
+            
+            .empty-favorites i {
+                font-size: 4rem;
+                color: var(--gold-dim);
+                margin-bottom: 1rem;
+            }
+            
+            .empty-favorites p {
+                color: var(--text-dim);
+                margin-bottom: 1.5rem;
+            }
+            
+            .favorites-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.5rem;
+            }
+            
+            /* Favori kartı - normal karttan farklı olarak favori butonu her zaman görünür */
+            .favorite-card {
+                background: var(--dark3);
+                border: 1px solid rgba(201,168,76,0.15);
+                border-radius: 12px;
+                overflow: hidden;
+                position: relative;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .favorite-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(201,168,76,0.4);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            }
+            
+            .favorite-card .art-img-wrap {
+                overflow: hidden;
+                aspect-ratio: 3/4;
+                position: relative;
+                background: var(--dark4);
+            }
+            
+            .favorite-card .art-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+            
+            .favorite-card:hover .art-img {
+                transform: scale(1.05);
+            }
+            
+            .favorite-card .fav-btn {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                background: #e74c3c;
+                border: none;
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 10;
+                transition: all 0.3s ease;
+                opacity: 1;
+            }
+            
+            .favorite-card .fav-btn i {
+                font-size: 1rem;
+                color: white;
+            }
+            
+            .favorite-card .fav-btn:hover {
+                background: #c0392b;
+                transform: scale(1.05);
+            }
+            
+            .favorite-card .art-info {
+                padding: 1rem;
+            }
+            
+            .favorite-card .art-artist {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.6rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 0.3rem;
+            }
+            
+            .favorite-card .art-title {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1rem;
+                font-style: italic;
+                color: var(--cream);
+                line-height: 1.3;
+                margin-bottom: 0.4rem;
+            }
+            
+            .favorite-card .art-meta {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.6rem;
+                color: var(--text-dim);
+                letter-spacing: 0.08em;
+                margin-bottom: 0.8rem;
+            }
+            
+            .favorite-card .art-price-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-top: 1px solid rgba(201,168,76,0.12);
+                padding-top: 0.7rem;
+                margin-top: 0.3rem;
+            }
+            
+            .favorite-card .art-price {
+                font-family: 'Cinzel', serif;
+                font-size: 1rem;
+                color: var(--gold);
+                font-weight: 600;
+            }
+            
+            .favorite-card .add-to-cart-btn {
+                background: var(--gold-dim);
+                color: var(--cream);
+                border: none;
+                padding: 0.3rem 0.8rem;
+                border-radius: 20px;
+                font-size: 0.7rem;
+                cursor: pointer;
+                transition: all 0.3s;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 500;
+                letter-spacing: 0.05em;
+            }
+            
+            .favorite-card .add-to-cart-btn:hover {
+                background: var(--gold);
+                color: var(--dark);
+                transform: scale(1.02);
+            }
+            
+            @media (max-width: 1200px) {
+                .favorites-grid { grid-template-columns: repeat(3, 1fr); }
+            }
+            
+            @media (max-width: 768px) {
+                .favorites-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            
+            @media (max-width: 480px) {
+                .favorites-grid { grid-template-columns: 1fr; }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="favorites-page">
+            <h1>Favorilerim</h1>
+            <p class="subtitle">Beğendiğiniz eserler burada toplanır</p>
+            
+            <div class="favorites-grid" id="favoritesGrid">
+                <!-- Favori ürünler JS ile doldurulacak -->
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Galeri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p><span>Güvenli Ödeme</span> · <span>SSL Şifreli</span> · <span>Orijinallik Garantili</span></p>
+            </div>
+        </footer>
+
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-8 8h5v8h6v-8h5z" fill="var(--dark)"/></svg>
+        </button>
+
+        <!-- DESTEK CHAT BUTONU -->
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i>
+                <span>ÆTERNA Destek</span>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+            
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('aeterna_cart') || '[]');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) cartCountSpan.textContent = totalItems;
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+            
+            // Ürün bilgilerini products verilerinden bul - DOĞRUDAN products KULLAN
+            function findProductByTitle(title) {
+                // products değişkenini doğrudan kullan (script.js'den geliyor)
+                if (typeof products === 'undefined') {
+                    console.error('products değişkeni bulunamadı!');
+                    return null;
+                }
+                
+                // Popüler ürünlerde ara
+                if (products.popular) {
+                    let found = products.popular.find(p => p.title === title);
+                    if (found) return found;
+                }
+                
+                // Tüm dönemlerde ara
+                const periods = ['ronesans', 'barok', 'rokoko', 'noklasik', 'romantizm', 'izlenimcilik'];
+                for (const period of periods) {
+                    if (products[period] && products[period].tablolar) {
+                        let found = products[period].tablolar.find(p => p.title === title);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            }
+            
+            // Favori ürünleri yükle
+            function loadFavorites() {
+                const favorites = JSON.parse(localStorage.getItem('aeterna_favorites') || '[]');
+                const container = document.getElementById('favoritesGrid');
+                
+                if (!container) return;
+                
+                if (favorites.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-favorites" style="grid-column:1/-1">
+                            <i class="far fa-heart"></i>
+                            <p>Henüz favori eseriniz bulunmamaktadır.</p>
+                            <a href="index.html" style="background:var(--gold); color:var(--dark); padding:0.8rem 2rem; text-decoration:none; border-radius:8px; display:inline-block;">Alışverişe Başla</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Favori ürünlerin bilgilerini topla
+                const favoriteProducts = [];
+                for (const title of favorites) {
+                    const product = findProductByTitle(title);
+                    if (product) {
+                        favoriteProducts.push(product);
+                    } else {
+                        console.warn('Ürün bulunamadı:', title);
+                    }
+                }
+                
+                if (favoriteProducts.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-favorites" style="grid-column:1/-1">
+                            <i class="far fa-heart"></i>
+                            <p>Favori eserleriniz bulunamadı.</p>
+                            <p style="font-size:0.8rem; margin-top:0.5rem;">Seçtiğiniz favoriler: ${favorites.join(', ')}</p>
+                            <a href="index.html" style="background:var(--gold); color:var(--dark); padding:0.8rem 2rem; text-decoration:none; border-radius:8px; display:inline-block; margin-top:1rem;">Alışverişe Başla</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Ürünleri göster
+                container.innerHTML = favoriteProducts.map(item => `
+                    <div class="favorite-card" onclick="window.location.href='detay.html?eser=${encodeURIComponent(item.title)}'">
+                        <div class="art-img-wrap">
+                            <img src="${item.img || 'placeholder.png'}" alt="${item.title}" class="art-img" onerror="this.src='https://placehold.co/400x533/1c1610/c9a84c?text=Art'">
+                            <button class="fav-btn" onclick="event.stopPropagation();removeFromFavorites('${item.title.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="art-info">
+                            <div class="art-artist">${item.artist}</div>
+                            <div class="art-title">${item.title}</div>
+                            <div class="art-meta">${item.year} · ${item.type === 'tablo' ? 'Kanvas Tablo' : 'Heykel'}</div>
+                            <div class="art-price-row">
+                                <span class="art-price">₺${item.price.toLocaleString('tr-TR')}</span>
+                                ${item.badge === 'sold' 
+                                    ? `<button class="btn-add-cart-corner sold-out" disabled style="background:#5a5a5a; color:#8a8a8a; opacity:0.6; cursor:not-allowed; pointer-events:none;">
+                                        <i class="fas fa-ban"></i> Stokta Yok
+                                    </button>`
+                                    : `<button class="btn-add-cart-corner" onclick="event.stopPropagation();addToCart('${item.title.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                                    </button>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Favorilerden kaldır
+            function removeFromFavorites(title) {
+                let favorites = JSON.parse(localStorage.getItem('aeterna_favorites') || '[]');
+                favorites = favorites.filter(fav => fav !== title);
+                localStorage.setItem('aeterna_favorites', JSON.stringify(favorites));
+                showToast(`"${title}" favorilerden çıkarıldı`);
+                loadFavorites(); // Listeyi yenile
+            }
+            
+            // Sepete ekle (window'daki addToCart'ı kullan)
+            window.addToCart = function(title) {
+                const cart = JSON.parse(localStorage.getItem('aeterna_cart') || '[]');
+                const existingIndex = cart.findIndex(item => item.title === title);
+                
+                if (existingIndex > -1) {
+                    cart[existingIndex].quantity += 1;
+                } else {
+                    const product = findProductByTitle(title);
+                    if (product) {
+                        cart.push({
+                            title: product.title,
+                            artist: product.artist,
+                            year: product.year,
+                            price: product.price,
+                            img: product.img,
+                            quantity: 1
+                        });
+                    }
+                }
+                
+                localStorage.setItem('aeterna_cart', JSON.stringify(cart));
+                updateCartCount();
+                showToast(`"${title}" sepete eklendi!`);
+            };
+            
+            // Back to top
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+            
+            // Sayfa yüklendiğinde
+            document.addEventListener('DOMContentLoaded', () => {
+                // products yüklendikten sonra favorileri göster
+                setTimeout(() => {
+                    loadFavorites();
+                    updateCartCount();
+                }, 200);
+            });
+        </script>
+    <!-- Tab Sesli Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var lastFocused = null;
+        var usingKeyboard = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') usingKeyboard = true;
+        });
+        document.addEventListener('mousedown', function() {
+            usingKeyboard = false;
+        });
+
+        function getLabel(el) {
+            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+            var id = el.id;
+            if (id) {
+                var lbl = document.querySelector('label[for="' + id + '"]');
+                if (lbl) return lbl.innerText.trim();
+            }
+            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+            var text = (el.innerText || el.textContent || '').trim();
+            if (text) return text;
+            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+            return null;
+        }
+
+        document.addEventListener('focusin', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            var tag = el.tagName;
+            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+            if (el === lastFocused) return;
+            lastFocused = el;
+            var text = getLabel(el);
+            if (!text) return;
+            synth.cancel();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 1;
+            synth.speak(utt);
+        });
+    })();
+    </script>
+    </body>
+</html>

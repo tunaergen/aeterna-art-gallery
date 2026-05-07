@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hakkımızda — ÆTERNA Sanat Galerisi</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* Sayfa özel stilleri */
+            .about-hero {
+                height: 70vh;
+                min-height: 500px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                margin-top: 64px;
+                width: 100%;
+            }
+            
+            .about-hero-bg {
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,69,19,0.15) 0%, transparent 60%),
+                    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
+                    linear-gradient(135deg, #120e08 0%, #0a0806 50%, #1c1610 100%);
+                animation: aboutSlowZoom 25s infinite alternate;
+            }
+            
+            @keyframes aboutSlowZoom {
+                0% { transform: scale(1); }
+                100% { transform: scale(1.1); }
+            }
+            
+            .about-hero-lines {
+                position: absolute;
+                inset: 0;
+                background-image:
+                    repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(201,168,76,0.05) 79px, rgba(201,168,76,0.05) 80px),
+                    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(201,168,76,0.05) 79px, rgba(201,168,76,0.05) 80px);
+            }
+            
+            .about-hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 900px;
+                width: 100%;
+                padding: 2rem 4vw;
+            }
+            
+            .about-hero-sub {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 0.5em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                justify-content: center;
+            }
+            
+            .about-hero-sub::before,
+            .about-hero-sub::after {
+                content: '';
+                width: 50px;
+                height: 1px;
+                background: var(--gold-dim);
+            }
+            
+            .about-hero h1 {
+                font-size: 3.5rem;
+                font-family: 'Cinzel', serif;
+                color: var(--gold);
+                letter-spacing: 0.1em;
+                margin-bottom: 1rem;
+            }
+            
+            .about-hero p {
+                font-size: 1.2rem;
+                color: var(--text-dim);
+                max-width: 700px;
+                margin: 0 auto;
+                font-style: italic;
+            }
+            
+            .about-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 5rem 4vw;
+            }
+            
+            .about-section {
+                margin-bottom: 4rem;
+            }
+            
+            .about-section h2 {
+                font-family: 'Cinzel', serif;
+                font-size: 2rem;
+                color: var(--gold);
+                margin-bottom: 1.5rem;
+                letter-spacing: 0.05em;
+                position: relative;
+                display: inline-block;
+            }
+            
+            .about-section h2::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 60%;
+                height: 2px;
+                background: linear-gradient(to right, var(--gold), transparent);
+            }
+            
+            .about-section p {
+                font-size: 1.05rem;
+                line-height: 1.9;
+                color: var(--text);
+                margin-bottom: 1.2rem;
+            }
+            
+            .values-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                margin: 3rem 0;
+            }
+            
+            .value-card {
+                background: var(--dark3);
+                border: 1px solid rgba(201,168,76,0.2);
+                border-radius: 12px;
+                padding: 2rem;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            
+            .value-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--gold);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+            
+            .value-card i {
+                font-size: 2.5rem;
+                color: var(--gold);
+                margin-bottom: 1rem;
+            }
+            
+            .value-card h3 {
+                font-family: 'Cinzel', serif;
+                font-size: 1.3rem;
+                color: var(--cream);
+                margin-bottom: 0.8rem;
+            }
+            
+            .value-card p {
+                font-size: 0.9rem;
+                color: var(--text-dim);
+                margin: 0;
+            }
+            
+            .stats-about {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                background: var(--dark4);
+                border-radius: 16px;
+                padding: 3rem 2rem;
+                margin: 3rem 0;
+                gap: 2rem;
+            }
+            
+            .stat-about {
+                text-align: center;
+            }
+            
+            .stat-about .number {
+                font-family: 'Cinzel', serif;
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: var(--gold);
+            }
+            
+            .stat-about .label {
+                font-size: 0.85rem;
+                letter-spacing: 0.1em;
+                color: var(--text-dim);
+                text-transform: uppercase;
+                margin-top: 0.5rem;
+            }
+            
+            @media (max-width: 768px) {
+                .about-hero h1 { font-size: 2.5rem; }
+                .values-grid { grid-template-columns: 1fr; }
+                .stats-about { flex-direction: column; align-items: center; }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO BÖLÜMÜ -->
+        <section class="about-hero" id="about-hero">
+            <div class="about-hero-bg"></div>
+            <div class="about-hero-lines"></div>
+            <div class="about-hero-content">
+                <div class="about-hero-sub">ÆTERNA</div>
+                <h1 data-aos="fade-up" data-aos-delay="200">HAKKIMIZDA</h1>
+                <p data-aos="fade-up" data-aos-delay="400">Sanatın ebedi yolculuğunda, geçmişin izini geleceğe taşıyoruz.</p>
+            </div>
+        </section>
+        <!-- ANA İÇERİK -->
+        <div class="about-content">
+            <div style="text-align:center; margin: 1.5rem 0 2.5rem;">
+                <button id="readStoryBtn" aria-label="Æterna'nın hikayesini sesli oku"
+                    style="display:inline-flex; align-items:center; gap:0.6rem;
+                           background:transparent; border:1px solid var(--gold-dim);
+                           color:var(--gold); padding:0.6rem 1.6rem;
+                           font-family:'Cinzel',serif; font-size:0.78rem;
+                           letter-spacing:0.18em; text-transform:uppercase;
+                           cursor:pointer; transition:all 0.3s;">
+                    &#9654; Hikayeyi Sesli Oku
+                </button>
+                <button id="stopStoryBtn" aria-label="Okumayı durdur"
+                    style="display:none; align-items:center; gap:0.6rem;
+                           background:var(--gold); border:none; color:var(--dark);
+                           padding:0.6rem 1.6rem; font-family:'Cinzel',serif;
+                           font-size:0.78rem; letter-spacing:0.18em;
+                           text-transform:uppercase; cursor:pointer; transition:all 0.3s;">
+                    &#9646;&#9646; Durdur
+                </button>
+            </div>
+
+            <!-- Giriş Bölümü -->
+            <div class="about-section" data-aos="fade-up">
+                <h2>ÆTERNA'nın Hikayesi</h2>
+                <p>Sanatın zamansız güzelliğini çağdaş bir bakış açısıyla buluşturan <strong>ÆTERNA</strong>, <em>2020 yılında</em> bir avuç sanat tutkununun hayaliyle kuruldu. <em>"Sonsuz"</em> anlamına gelen ismimiz, sanatın sınır tanımayan doğasını ve eserlerin nesiller boyu yaşatılma arzusunu simgeler. Kurulduğumuz günden bu yana, <em>Rönesans</em> ustalarından <em>İzlenimci</em> ressamlara, <em>Barok</em>'un ihtişamından <em>Romantizm</em>'in derin duygularına uzanan geniş bir yelpazede, sanatseverleri özgün eserlerle buluşturmayı misyon edindik.</p>
+                <p><strong>ÆTERNA</strong>, yalnızca bir sanat galerisi değil, aynı zamanda sanatın yalnızca duvarları süslemediğine, ruhları da beslediğine inanan bir topluluktur. Her bir tablo, yalnızca bir nesne değil; bir duygunun, bir düşüncenin, bir tarihin yansımasıdır. İşte bu yüzden, sergilediğimiz her eser özenle seçilir, her bir reprodüksiyon titizlikle hazırlanır.</p>
+            </div>
+
+            <!-- Neden ÆTERNA Bölümü -->
+            <div class="about-section" data-aos="fade-up" data-aos-delay="100">
+                <h2>Neden ÆTERNA?</h2>
+                <p><strong>Æterna</strong> ismini, sanatın ölümsüzlüğünden alır. Tıpkı zamanın ötesine geçen büyük ustaların eserleri gibi, biz de her bir tabloyu bir anıya, bir duyguya dönüştürmeyi hedefleriz. Kuruluş felsefemiz, sanatın herkes için ulaşılabilir olması gerektiği inancına dayanır. Sanatın yalnızca elit bir kesime hitap eden bir kavram olmaktan çıkıp, her evin, her ofisin, her yaşam alanının bir parçası olması gerektiğine inanıyoruz.</p>
+                <p>Bu yolda karşılaştığımız her zorluk, bizi daha da güçlendirdi. Pandemi döneminde dijital dönüşümümüzü hızlandırarak, sanatseverleri evlerinde ağırlamaya başladık. Bugün, Türkiye'nin dört bir yanına ve dünyanın birçok ülkesine, güvenli ambalajlama ve hızlı kargo ile eserlerimizi ulaştırmanın gururunu yaşıyoruz.</p>
+            </div>
+
+            <!-- Değerlerimiz -->
+            <div class="values-grid">
+                <div class="value-card" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-palette"></i>
+                    <h3>Özgünlük</h3>
+                    <p>Her eser, sanatçısının ruhunu taşır. Biz de bu ruhu en saf haliyle korumayı, özgün ve kaliteli reprodüksiyonlar üretmeyi ilke edindik.</p>
+                </div>
+                <div class="value-card" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-hand-sparkles"></i>
+                    <h3>El İşçiliği</h3>
+                    <p>Her tablo, usta ressamlar tarafından özenle elle boyanır. Dijital baskı değil, gerçek sanat eserleri sunarız.</p>
+                </div>
+                <div class="value-card" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Güvenilirlik</h3>
+                    <p>Her eser, orijinallik sertifikası ile teslim edilir. Sanat eseri satın almak artık güvenli ve şeffaf.</p>
+                </div>
+            </div>
+
+            <!-- Uzman Kadro -->
+            <div class="about-section" data-aos="fade-up">
+                <h2>Uzman Kadro, Tutkulu Ekip</h2>
+                <p><strong>Æterna</strong> bünyesinde, sanat tarihçilerinden restoratörlere, usta ressamlardan müşteri danışmanlarına kadar geniş bir uzman kadro görev yapmaktadır. Her bir ekibimiz, sanatın farklı bir alanında derinleşmiş, eserlerin doğru anlaşılması ve doğru kişilere ulaştırılması için çalışır. Bir tablonun size ulaşana kadar geçtiği her aşama, titizlikle takip edilir. Sanat danışmanlarımız, sizin zevkinizi ve mekanınızı analiz ederek, size en uygun eseri bulmanızda rehberlik eder. Usta ressamlarımız, her bir fırça darbesini özenle atar. Lojistik ekibimiz ise eserin hasarsız bir şekilde size ulaşması için gece gündüz çalışır.</p>
+            </div>
+
+            <!-- Vizyon ve Misyon -->
+            <div class="about-section" data-aos="fade-up">
+                <h2>Vizyonumuz ve Misyonumuz</h2>
+                <p><strong>Misyonumuz:</strong> Sanatın dönüştürücü gücünü her eve, her ofise taşımak. Sanatseverlerle gerçek sanat eserlerini buluşturmak, bu süreçte şeffaf, güvenilir ve danışman bir yaklaşım sergilemek.</p>
+                <p><strong>Vizyonumuz:</strong> Türkiye'nin önde gelen sanat galerilerinden biri olmanın ötesinde, sanatın dijital dünyadaki en güçlü temsilcilerinden biri haline gelmek. Sanat atölyeleri, sanatçı söyleşileri ve sergi turları ile sanatın yaratıcı dünyasına daha derinlemesine dalma fırsatı sunarak, sanatseverleri ve sanatçıları bir araya getiren bir platform olmak.</p>
+            </div>
+
+            <!-- İstatistikler -->
+            <div class="stats-about" data-aos="fade-up">
+                <div class="stat-about">
+                    <div class="number">500+</div>
+                    <div class="label">Özgün Eser</div>
+                </div>
+                <div class="stat-about">
+                    <div class="number">6</div>
+                    <div class="label">Sanat Dönemi</div>
+                </div>
+                <div class="stat-about">
+                    <div class="number">150+</div>
+                    <div class="label">Usta Ressam</div>
+                </div>
+                <div class="stat-about">
+                    <div class="number">18+</div>
+                    <div class="label">Ülkeye Teslimat</div>
+                </div>
+            </div>
+
+            <!-- Özgünlük ve Gerçeklik -->
+            <div class="about-section" data-aos="fade-up">
+                <h2>Özgünlük ve Gerçeklik</h2>
+                <p>Özellikle vurgulamak isteriz ki, galerimizde bulunan tüm yağlı boya tablolar, usta ressamlarca elle boyanmış gerçek yağlı boya eserleridir. <strong>ÆTERNA</strong>'da kesinlikle dijital baskı tablo bulunmamaktadır. Sanatın özgünlüğüne ve dokusuna verdiğimiz değer, her esere yansıyan emekte kendini gösterir. Her bir tablomuz, orijinallik sertifikası ile birlikte teslim edilmekte, böylece sanat eserinin yalnızca estetik değil, aynı zamanda maddi değeri de güvence altına alınmaktadır.</p>
+            </div>
+
+            <!-- Kapanış -->
+            <div class="about-section" data-aos="fade-up">
+                <h2>Sanat, Dostluk, Sonsuzluk</h2>
+                <p><strong>ÆTERNA</strong>, dostluğun ve sanatın yıllara meydan okuyan birlikteliğinin bir kanıtıdır. Sizleri de sanatın zamansız yolculuğunda bize katılmaya, geçmişin izlerini geleceğe birlikte taşımaya davet ediyoruz. Unutmayın, gerçek sanat her zaman iz bırakır. Ve biz, <strong>ÆTERNA</strong> olarak, bu izin sonsuza dek sürmesini diliyoruz.</p>
+                <p style="margin-top: 1.5rem; font-style: italic; color: var(--gold);">ÆTERNA — Sanat sonsuzdur, biz sadece ona eşlik ederiz.</p>
+            </div>
+        </div>
+
+        <!-- NEWSLETTER & İLETİŞİM BÖLÜMÜ -->
+        <section class="newsletter-section" id="iletisim">
+            <div class="newsletter-container">
+                <h2 data-aos="fade-up">KOLEKSİYONERE ÖZEL</h2>
+                <p data-aos="fade-up" data-aos-delay="200">Yeni eserler ve özel satışlar için bültenimize katılın</p>
+                <div class="newsletter-form" data-aos="fade-up" data-aos-delay="400">
+                    <input type="email" placeholder="E-posta adresiniz..." id="newsletter-email" name="email">
+                    <button onclick="showToast('Bültene başarıyla abone oldunuz!')">Katıl</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Sanat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p><span>Güvenli Ödeme</span> · <span>SSL Şifreli</span> · <span>Orijinallik Garantili</span></p>
+            </div>
+        </footer>
+
+        <!--Back To Top-->
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+        </button>
+
+        <!-- DESTEK CHAT BUTONU -->
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i>
+                <span>ÆTERNA Destek</span>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 100 });
+            
+            let cartCount = 0;
+            function addToCart(title) {
+                cartCount++;
+                document.getElementById('cart-count').textContent = cartCount;
+                showToast(`"${title}" sepete eklendi!`);
+            }
+            
+            let toastTimer;
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+            
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+        </script>
+    <!-- Hakkımızda Bölüm Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var readBtn = document.getElementById('readStoryBtn');
+        var stopBtn = document.getElementById('stopStoryBtn');
+        if (!readBtn) return;
+
+        function collectStoryText() {
+            var sections = document.querySelectorAll('.about-section, .value-card');
+            var parts = [];
+            sections.forEach(function(sec) {
+                var h = sec.querySelector('h2, h3');
+                if (h) parts.push(h.innerText.trim());
+                sec.querySelectorAll('p').forEach(function(p) {
+                    parts.push(p.innerText.trim());
+                });
+            });
+            return parts.join('. ');
+        }
+
+        readBtn.addEventListener('click', function() {
+            synth.cancel();
+            var text = collectStoryText();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 0.95;
+            utt.onstart = function() {
+                readBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-flex';
+            };
+            utt.onend = utt.onerror = function() {
+                readBtn.style.display = 'inline-flex';
+                stopBtn.style.display = 'none';
+            };
+            synth.speak(utt);
+        });
+
+        stopBtn.addEventListener('click', function() {
+            synth.cancel();
+            readBtn.style.display = 'inline-flex';
+            stopBtn.style.display = 'none';
+        });
+    })();
+    </script>
+    <!-- Tab Sesli Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var lastFocused = null;
+        var usingKeyboard = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') usingKeyboard = true;
+        });
+        document.addEventListener('mousedown', function() {
+            usingKeyboard = false;
+        });
+
+        function getLabel(el) {
+            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+            var id = el.id;
+            if (id) {
+                var lbl = document.querySelector('label[for="' + id + '"]');
+                if (lbl) return lbl.innerText.trim();
+            }
+            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+            var text = (el.innerText || el.textContent || '').trim();
+            if (text) return text;
+            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+            return null;
+        }
+
+        document.addEventListener('focusin', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            var tag = el.tagName;
+            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+            if (el === lastFocused) return;
+            lastFocused = el;
+            var text = getLabel(el);
+            if (!text) return;
+            synth.cancel();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 1;
+            synth.speak(utt);
+        });
+    })();
+    </script>
+    </body>
+</html>

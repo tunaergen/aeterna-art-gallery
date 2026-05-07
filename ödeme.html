@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ödeme — ÆTERNA Sanat Galerisi</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .payment-page {
+                max-width: 1200px;
+                margin: 100px auto 4rem;
+                padding: 0 4vw;
+                min-height: 60vh;
+            }
+            
+            .payment-page h1 {
+                font-family: 'Cinzel', serif;
+                font-size: 2.5rem;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+            }
+            
+            .payment-page h1::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 2px;
+                background: var(--gold-dim);
+                margin-top: 0.5rem;
+            }
+            
+            .payment-container {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .payment-form {
+                background: var(--dark3);
+                border-radius: 12px;
+                border: 1px solid rgba(201,168,76,0.15);
+                padding: 2rem;
+            }
+            
+            .form-section {
+                margin-bottom: 2rem;
+            }
+            
+            .form-section h3 {
+                font-family: 'Cinzel', serif;
+                font-size: 1.1rem;
+                color: var(--gold);
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid rgba(201,168,76,0.2);
+            }
+            
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 2;
+            }
+            
+            .form-group label {
+                display: block;
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text-dim);
+                margin-bottom: 0.5rem;
+            }
+            
+            .form-group input, .form-group select {
+                width: 100%;
+                background: var(--dark4);
+                border: 1px solid rgba(201,168,76,0.2);
+                border-radius: 8px;
+                padding: 0.8rem 1rem;
+                color: var(--cream);
+                font-family: var(--font-body);
+                font-size: 0.9rem;
+                transition: all 0.3s;
+            }
+            
+            .form-group input:focus, .form-group select:focus {
+                outline: none;
+                border-color: var(--gold);
+            }
+            
+            .form-group input::placeholder {
+                color: var(--text-dim);
+                font-size: 0.8rem;
+            }
+            
+            .card-icons {
+                display: flex;
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .card-icons i {
+                font-size: 2rem;
+                color: var(--text-dim);
+                transition: color 0.3s;
+            }
+            
+            .card-icons i:hover {
+                color: var(--gold);
+            }
+            
+            .order-summary {
+                background: var(--dark3);
+                border-radius: 12px;
+                border: 1px solid rgba(201,168,76,0.15);
+                padding: 1.5rem;
+                position: sticky;
+                top: 100px;
+                height: fit-content;
+            }
+            
+            .order-summary h3 {
+                font-family: 'Cinzel', serif;
+                font-size: 1.2rem;
+                color: var(--gold);
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid rgba(201,168,76,0.2);
+            }
+            
+            .order-items {
+                max-height: 300px;
+                overflow-y: auto;
+                margin-bottom: 1rem;
+            }
+            
+            .order-item {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.8rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(201,168,76,0.1);
+            }
+            
+            .order-item-info {
+                flex: 1;
+            }
+            
+            .order-item-title {
+                color: var(--cream);
+                font-weight: 500;
+            }
+            
+            .order-item-meta {
+                font-size: 0.7rem;
+                color: var(--text-dim);
+            }
+            
+            .order-item-price {
+                color: var(--gold);
+                font-family: 'Cinzel', serif;
+            }
+            
+            .summary-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.8rem;
+                color: var(--text);
+                font-size: 0.9rem;
+            }
+            
+            .summary-row.total {
+                font-family: 'Cinzel', serif;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--gold);
+                border-top: 1px solid rgba(201,168,76,0.2);
+                padding-top: 0.8rem;
+                margin-top: 0.5rem;
+            }
+            
+            .pay-btn {
+                width: 100%;
+                background: var(--gold);
+                color: var(--dark);
+                border: none;
+                padding: 1rem;
+                font-family: 'Cinzel', serif;
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-top: 1rem;
+                border-radius: 8px;
+            }
+            
+            .pay-btn:hover {
+                background: var(--gold-light);
+                transform: translateY(-2px);
+            }
+            
+            .secure-badge {
+                text-align: center;
+                margin-top: 1rem;
+                font-size: 0.7rem;
+                color: var(--text-dim);
+            }
+            
+            .secure-badge i {
+                color: #2ecc71;
+                margin-right: 0.3rem;
+            }
+            
+            @media (max-width: 900px) {
+                .payment-container {
+                    grid-template-columns: 1fr;
+                }
+                .form-row {
+                    grid-template-columns: 1fr;
+                }
+                .form-group.full-width {
+                    grid-column: span 1;
+                }
+            }
+            
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                backdrop-filter: blur(8px);
+                z-index: 2000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+            }
+            
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .success-modal {
+                background: var(--dark3);
+                border: 1px solid var(--gold);
+                border-radius: 16px;
+                padding: 2.5rem;
+                text-align: center;
+                max-width: 450px;
+                width: 90%;
+                transform: scale(0.9);
+                transition: transform 0.3s;
+            }
+            
+            .modal-overlay.active .success-modal {
+                transform: scale(1);
+            }
+            
+            .success-modal i {
+                font-size: 4rem;
+                color: #2ecc71;
+                margin-bottom: 1rem;
+            }
+            
+            .success-modal h2 {
+                font-family: 'Cinzel', serif;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+            }
+            
+            .success-modal p {
+                color: var(--text-dim);
+                margin-bottom: 1.5rem;
+            }
+            
+            .success-modal button {
+                background: var(--gold);
+                color: var(--dark);
+                border: none;
+                padding: 0.8rem 2rem;
+                font-family: 'Cinzel', serif;
+                cursor: pointer;
+                border-radius: 8px;
+                margin: 0.3rem;
+            }
+            
+            .success-modal button:hover {
+                background: var(--gold-light);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-page">
+            <h1>Ödeme</h1>
+            <p class="subtitle" style="color: var(--text-dim); font-style: italic;">Güvenli ödeme sayfası</p>
+            
+            <div class="payment-container" id="payment-container">
+                <!-- İçerik JS ile doldurulacak -->
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="successModal">
+            <div class="success-modal">
+                <i class="fas fa-check-circle"></i>
+                <h2>Ödeme Başarılı!</h2>
+                <p>Siparişiniz alınmıştır.<br>Sipariş onayınız e-posta adresinize gönderilecektir.</p>
+                <button onclick="window.location.href='index.html'">Alışverişe Devam Et</button>
+                <button onclick="window.location.href='siparislerim.html'">Siparişlerim</button>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Galeri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p>
+                    <span>Güvenli Ödeme</span> · 
+                    <span>SSL Şifreli</span> · 
+                    <span>Orijinallik Garantili</span>
+                </p>
+            </div>
+        </footer>
+
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-8 8h5v8h6v-8h5z" fill="var(--dark)"/></svg>
+        </button>
+
+        <!-- DESTEK CHAT BUTONU -->
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i>
+                <span>ÆTERNA Destek</span>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            function getCart() {
+                const cart = localStorage.getItem('aeterna_cart');
+                return cart ? JSON.parse(cart) : [];
+            }
+            
+            function updateCartCount() {
+                const cart = getCart();
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) cartCountSpan.textContent = totalItems;
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+            
+            // Kargo ücretini ve teslimat süresini hesapla
+            function getShippingInfo(method) {
+                switch(method) {
+                    case 'free':
+                        return { fee: 0, days: "3-5 iş günü", carrier: "MNG Kargo" };
+                    case 'express':
+                        return { fee: 59.90, days: "1-2 iş günü", carrier: "Aras Kargo" };
+                    case 'sameDay':
+                        return { fee: 99.90, days: "Aynı gün (İstanbul içi 14.00'e kadar) ", carrier: "Kolay Gelsin Kargo" };
+                    case 'standard':
+                        return { fee: 29.90, days: "2-4 iş günü", carrier: "Yurtiçi Kargo" };
+                    case 'ptt':
+                        return { fee: 19.90, days: "3-5 iş günü", carrier: "PTT Kargo" };
+                    default:
+                        return { fee: 0, days: "3-5 iş günü", carrier: "MNG Kargo" };
+                }
+            }
+            
+            // Toplam tutarı ve teslimat süresini güncelle
+            function updateTotalPrice() {
+                const shippingSelect = document.getElementById('shippingMethod');
+                if (!shippingSelect) return;
+                
+                const shippingInfo = getShippingInfo(shippingSelect.value);
+                const shippingFee = shippingInfo.fee;
+                
+                const cart = getCart();
+                let subtotal = 0;
+                cart.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                });
+                
+                const kdv = subtotal * 0.20;
+                const total = subtotal + kdv + shippingFee;
+                
+                // Kargo ücretini güncelle
+                const shippingAmountSpan = document.getElementById('shippingAmount');
+                if (shippingAmountSpan) {
+                    shippingAmountSpan.innerHTML = shippingFee === 0 ? 'Ücretsiz' : `₺${shippingFee.toLocaleString('tr-TR')}`;
+                }
+                
+                // Toplam tutarı güncelle
+                const totalAmountSpan = document.getElementById('totalAmount');
+                if (totalAmountSpan) {
+                    totalAmountSpan.innerHTML = `₺${total.toLocaleString('tr-TR')}`;
+                }
+                
+                // Teslimat süresini güncelle
+                const deliveryDaysSpan = document.getElementById('deliveryDays');
+                if (deliveryDaysSpan) {
+                    deliveryDaysSpan.innerHTML = shippingInfo.days;
+                }
+                
+                // Kargo firmasını güncelle
+                const carrierSpan = document.getElementById('carrierName');
+                if (carrierSpan) {
+                    carrierSpan.innerHTML = shippingInfo.carrier;
+                }
+                
+                // Öde butonunu güncelle
+                const payBtn = document.querySelector('.pay-btn');
+                if (payBtn) {
+                    payBtn.innerHTML = `₺${total.toLocaleString('tr-TR')} Öde`;
+                    payBtn.setAttribute('onclick', 'processPayment()');
+                }
+            }
+            
+            function renderPayment() {
+                const cart = getCart();
+                const container = document.getElementById('payment-container');
+                
+                if (cart.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column:1/-1; text-align:center; padding:4rem; background:var(--dark3); border-radius:12px;">
+                            <i class="fas fa-shopping-cart" style="font-size:4rem; color:var(--gold-dim);"></i>
+                            <p style="margin:1rem 0; color:var(--text-dim);">Sepetiniz boş. Ödeme yapmak için sepete ürün ekleyin.</p>
+                            <a href="index.html" style="background:var(--gold); color:var(--dark); padding:0.8rem 2rem; text-decoration:none; border-radius:8px; display:inline-block;">Alışverişe Başla</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let subtotal = 0;
+                let orderItemsHtml = '';
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    orderItemsHtml += `
+                        <div class="order-item">
+                            <div class="order-item-info">
+                                <div class="order-item-title">${item.title}</div>
+                                <div class="order-item-meta">${item.artist} · ${item.quantity} adet</div>
+                            </div>
+                            <div class="order-item-price">₺${itemTotal.toLocaleString('tr-TR')}</div>
+                        </div>
+                    `;
+                });
+                
+                const kdv = subtotal * 0.20;
+                const initialShippingInfo = getShippingInfo('free');
+                const initialShipping = initialShippingInfo.fee;
+                const total = subtotal + kdv + initialShipping;
+                
+                container.innerHTML = `
+                    <div class="payment-form">
+                        <div class="form-section">
+                            <h3>Fatura Bilgileri</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ad</label>
+                                    <input type="text" id="firstName" placeholder="Adınız">
+                                </div>
+                                <div class="form-group">
+                                    <label>Soyad</label>
+                                    <input type="text" id="lastName" placeholder="Soyadınız">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>E-posta</label>
+                                <input type="email" id="email" placeholder="ornek@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Telefon</label>
+                                <input type="tel" id="phone" placeholder="05XX XXX XX XX">
+                            </div>
+                            <div class="form-group">
+                                <label>Adres</label>
+                                <input type="text" id="address" placeholder="Teslimat adresi">
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Ödeme Yöntemi</h3>
+                            <div class="form-group">
+                                <select id="paymentMethod">
+                                    <option value="credit">Kredi Kartı / Banka Kartı</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="bank">Havale / EFT</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Kart Bilgileri</h3>
+                            <div class="card-icons">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                                <i class="fab fa-cc-paypal"></i>
+                            </div>
+                            <div class="form-group">
+                                <label>Kart Numarası</label>
+                                <input type="text" id="cardNumber" placeholder="**** **** **** ****" maxlength="19">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Son Kullanma Tarihi</label>
+                                    <input type="text" id="cardExpiry" placeholder="AA/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVC / CVV</label>
+                                    <input type="text" id="cardCvc" placeholder="***" maxlength="3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Kart Sahibi</label>
+                                <input type="text" id="cardName" placeholder="Kart üzerindeki isim">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <h3>Sipariş Özeti</h3>
+                        <div class="order-items">
+                            ${orderItemsHtml}
+                        </div>
+                        
+                        <div style="margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid rgba(201,168,76,0.2);">
+                            <h3 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Kargo Seçeneği</h3>
+                            <select id="shippingMethod" style="width: 100%; background: var(--dark4); border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; padding: 0.6rem; color: var(--cream); font-size: 0.8rem;">
+                                <option value="free">MNG Kargo - Ücretsiz (3-5 iş günü)</option>
+                                <option value="express">Aras Kargo - Hızlı Teslimat (+₺59,90)</option>
+                                <option value="sameDay">Kolay Gelsin Kargo - Aynı Gün Teslimat (+₺99,90)</option>
+                                <option value="standard">Yurtiçi Kargo - Standart (+₺29,90)</option>
+                                <option value="ptt">PTT Kargo - Ekonomik (+₺19,90)</option>
+                            </select>
+                            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 0.5rem;">
+                                <i class="fas fa-truck"></i> Kargo Firması: <span id="carrierName">MNG Kargo</span> | Tahmini teslimat: <span id="deliveryDays">3-5 iş günü</span>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Ara Toplam</span>
+                            <span>₺${subtotal.toLocaleString('tr-TR')}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>KDV (%20)</span>
+                            <span>₺${kdv.toLocaleString('tr-TR')}</span>
+                        </div>
+                        <div class="summary-row" id="shippingSummaryRow">
+                            <span>Kargo</span>
+                            <span id="shippingAmount">${initialShipping === 0 ? 'Ücretsiz' : `₺${initialShipping.toLocaleString('tr-TR')}`}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Toplam</span>
+                            <span id="totalAmount">₺${total.toLocaleString('tr-TR')}</span>
+                        </div>
+                        <button class="pay-btn" onclick="processPayment()">₺${total.toLocaleString('tr-TR')} Öde</button>
+                        <div class="secure-badge">
+                            <i class="fas fa-lock"></i> 256-bit SSL Güvenli Ödeme
+                        </div>
+                    </div>
+                `;
+                
+                // Kargo seçimi değişince fiyatı güncelle
+                const shippingSelect = document.getElementById('shippingMethod');
+                if (shippingSelect) {
+                    shippingSelect.addEventListener('change', updateTotalPrice);
+                }
+            }
+            
+            function processPayment() {
+                const cart = getCart();
+                if (cart.length === 0) {
+                    showToast('Sepetiniz boş!');
+                    return;
+                }
+                
+                const cardNumber = document.getElementById('cardNumber')?.value || '';
+                const cardExpiry = document.getElementById('cardExpiry')?.value || '';
+                const cardCvc = document.getElementById('cardCvc')?.value || '';
+                const firstName = document.getElementById('firstName')?.value || '';
+                const lastName = document.getElementById('lastName')?.value || '';
+                const email = document.getElementById('email')?.value || '';
+                
+                if (!firstName || !lastName) {
+                    showToast('Lütfen ad ve soyad bilgilerinizi girin');
+                    return;
+                }
+                
+                if (!email || !email.includes('@')) {
+                    showToast('Lütfen geçerli bir e-posta adresi girin');
+                    return;
+                }
+                
+                if (cardNumber.replace(/\s/g, '').length < 13) {
+                    showToast('Lütfen geçerli bir kart numarası girin');
+                    return;
+                }
+                
+                if (!cardExpiry.match(/^\d{2}\/\d{2}$/)) {
+                    showToast('Lütfen geçerli bir son kullanma tarihi girin (AA/YY)');
+                    return;
+                }
+                
+                if (cardCvc.length < 3) {
+                    showToast('Lütfen geçerli bir CVC girin');
+                    return;
+                }
+                
+                showToast('Ödeme işleminiz gerçekleştiriliyor...');
+                
+                setTimeout(() => {
+                    // ===== YENİ: SİPARİŞİ KAYDET =====
+                    // Toplam tutarı hesapla
+                    let subtotal = 0;
+                    cart.forEach(item => {
+                        subtotal += item.price * item.quantity;
+                    });
+                    const kdv = subtotal * 0.20;
+                    
+                    // Seçilen kargo bilgisini al
+                    const shippingSelect = document.getElementById('shippingMethod');
+                    const selectedShipping = shippingSelect ? shippingSelect.value : 'free';
+                    const shippingInfo = getShippingInfo(selectedShipping);
+                    const total = subtotal + kdv + shippingInfo.fee;
+                    
+                    // Sipariş oluştur
+                    const existingOrders = JSON.parse(localStorage.getItem('aeterna_orders') || '[]');
+                    const newOrderId = `ÆTR-${new Date().getFullYear()}-${String(existingOrders.length + 1).padStart(3, '0')}`;
+                    
+                    const today = new Date();
+                    const formattedDate = `${today.getDate()} ${today.toLocaleString('tr-TR', { month: 'long' })} ${today.getFullYear()}`;
+                    
+                    const newOrder = {
+                        id: newOrderId,
+                        date: formattedDate,
+                        status: "pending",
+                        statusText: "Beklemede",
+                        total: total,
+                        items: cart.map(item => ({
+                            title: item.title,
+                            artist: item.artist,
+                            price: item.price,
+                            quantity: item.quantity,
+                            img: item.img
+                        })),
+                        tracking: null,
+                        carrier: null
+                    };
+                    
+                    existingOrders.unshift(newOrder);
+                    localStorage.setItem('aeterna_orders', JSON.stringify(existingOrders));
+                    // ===== SİPARİŞ KAYDI BİTTİ =====
+                    
+                    localStorage.removeItem('aeterna_cart');
+                    updateCartCount();
+                    document.getElementById('successModal').classList.add('active');
+                }, 1500);
+            }
+            
+            function formatCardNumber(input) {
+                let value = input.value.replace(/\s/g, '').replace(/\D/g, '');
+                if (value.length > 16) value = value.slice(0, 16);
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += value[i];
+                }
+                input.value = formatted;
+            }
+            
+            function formatExpiry(input) {
+                let value = input.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    input.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                } else {
+                    input.value = value;
+                }
+            }
+            
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                renderPayment();
+                updateCartCount();
+                
+                const cardNumberInput = document.getElementById('cardNumber');
+                const expiryInput = document.getElementById('cardExpiry');
+                
+                if (cardNumberInput) {
+                    cardNumberInput.addEventListener('input', () => formatCardNumber(cardNumberInput));
+                }
+                if (expiryInput) {
+                    expiryInput.addEventListener('input', () => formatExpiry(expiryInput));
+                }
+            });
+        </script>
+    <!-- Tab Sesli Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var lastFocused = null;
+        var usingKeyboard = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') usingKeyboard = true;
+        });
+        document.addEventListener('mousedown', function() {
+            usingKeyboard = false;
+        });
+
+        function getLabel(el) {
+            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+            var id = el.id;
+            if (id) {
+                var lbl = document.querySelector('label[for="' + id + '"]');
+                if (lbl) return lbl.innerText.trim();
+            }
+            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+            var text = (el.innerText || el.textContent || '').trim();
+            if (text) return text;
+            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+            return null;
+        }
+
+        document.addEventListener('focusin', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            var tag = el.tagName;
+            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+            if (el === lastFocused) return;
+            lastFocused = el;
+            var text = getLabel(el);
+            if (!text) return;
+            synth.cancel();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 1;
+            synth.speak(utt);
+        });
+    })();
+    </script>
+    </body>
+</html>

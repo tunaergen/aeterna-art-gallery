@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ÆTERNA — Sanat Galerisi & Satış</title>
+        <!-- Font Awesome, Google Fonts ve AOS kütüphaneleri CDN üzerinden yükleniyor. -->
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <!-- Yerel CSS dosyası -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="hero" id="top">
+            <div class="hero-bg"></div>
+            <div class="hero-lines"></div>
+            <div class="hero-content">
+                <div class="hero-sub" data-aos="fade-down">Koleksiyon & Satış</div>
+                <h1 data-aos="fade-up" data-aos-delay="200">ÆTERNA<em>Sanat Galerisi</em></h1>
+                <p class="hero-desc" data-aos="fade-up" data-aos-delay="400">Rönesans'tan İzlenimciliğe uzanan yolculukta, çağların ruhunu taşıyan tablolar.</p>
+                <div class="hero-btns" data-aos="fade-up" data-aos-delay="600">
+                    <a href="#populer-eserler" class="btn-primary">Popüler Eserler</a>
+                    <a href="hakkimizda.html" class="btn-secondary">Hakkımızda</a>
+                </div>
+            </div>
+            <div class="scroll-hint animate-float">
+                Aşağı Kaydır
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat" data-aos="zoom-in" data-aos-delay="50">
+                <div class="stat-num">500+</div>
+                <div class="stat-label">Özgün Eser</div>
+            </div>
+            <div class="stat" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-num">6</div>
+                <div class="stat-label">Sanat Dönemi</div>
+            </div>
+            <div class="stat" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-num">150+</div>
+                <div class="stat-label">Usta Ressam</div>
+            </div>
+            <div class="stat" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-num">18</div>
+                <div class="stat-label">Ülkeye Teslimat</div>
+            </div>
+            <div class="stat" data-aos="zoom-in" data-aos-delay="400">
+                <div class="stat-num">1400</div>
+                <div class="stat-label">Yılından Bu Yana</div>
+            </div>
+        </div>
+
+        <!-- POPÜLER ÜRÜNLER -->
+        <div class="period-content" id="populer-eserler" style="padding-top: 2rem;">
+            <div class="section-label">
+                <span class="section-label-text">🌟 POPÜLER ESERLER</span>
+                <div class="section-label-line"></div>
+            </div>
+            <div class="art-grid" id="popular-products"></div>
+        </div>
+
+        <!-- ANA İÇERİK -->
+        <main>
+            <!-- RÖNESANS DÖNEMİ -->
+            <div class="period-section period-ronesans" id="ronesans">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">Rönesans</span>
+                        <span class="period-years">1400 – 1600</span>
+                    </div>
+                    <span class="period-tag" style="background:#9b6a4a">32 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Antik Yunan ve Roma'nın yeniden doğuşu, insan merkezli sanat anlayışı, perspektif ve anatomi biliminin geliştiği dönem. Sanatın altın çağı.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text" style="color:#c9a06b">🖼 Tablolar</span>
+                        <div class="section-label-line" style="background:linear-gradient(to right,rgba(201,160,107,0.4),transparent)"></div>
+                    </div>
+                    <div class="art-grid" id="ronesans-tablolar"></div>
+                </div>
+            </div>
+
+            <!-- BAROK DÖNEMİ -->
+            <div class="period-section period-barok" id="barok">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">Barok</span>
+                        <span class="period-years">1600 – 1750</span>
+                    </div>
+                    <span class="period-tag">25 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Dramatik ışık-gölge oyunları, güçlü duygusal yoğunluk ve karmaşık kompozisyonlarıyla Barok sanatı, karanlığın içinden patlar gibi ortaya çıkan bir aydınlığı temsil eder.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text">🖼 Tablolar</span>
+                        <div class="section-label-line"></div>
+                    </div>
+                    <div class="art-grid" id="barok-tablolar"></div>
+                </div>
+            </div>
+
+            <!-- ROKOKO DÖNEMİ -->
+            <div class="period-section period-rokoko" id="rokoko">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">Rokoko</span>
+                        <span class="period-years">1720 – 1780</span>
+                    </div>
+                    <span class="period-tag" style="background:#7a5289">18 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Zarafet, neşe ve süslemenin doruk noktası olan Rokoko, pastel renkler, kıvrımlı hatlar ve zarif sahne tasvirleriyle masumiyetin ve lüksün sanatıdır.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text" style="color:#c9a0dc">🖼 Tablolar</span>
+                        <div class="section-label-line" style="background:linear-gradient(to right,rgba(201,160,220,0.4),transparent)"></div>
+                    </div>
+                    <div class="art-grid" id="rokoko-tablolar"></div>
+                </div>
+            </div>
+
+            <!-- NEOKLASİZM DÖNEMİ -->
+            <div class="period-section period-noklasik" id="noklasik">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">Neoklasizm</span>
+                        <span class="period-years">1750 – 1850</span>
+                    </div>
+                    <span class="period-tag" style="background:#2a6a84">22 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Antik Yunan ve Roma'nın ideal güzelliğine duyulan özlemle şekillenen Neoklasizm; sade, dengeli ve ahlaki bir sanat anlayışını temsil eder.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text" style="color:#7ab8d4">🖼 Tablolar</span>
+                        <div class="section-label-line" style="background:linear-gradient(to right,rgba(122,184,212,0.4),transparent)"></div>
+                    </div>
+                    <div class="art-grid" id="noklasik-tablolar"></div>
+                </div>
+            </div>
+
+            <!-- ROMANTİZM DÖNEMİ -->
+            <div class="period-section period-romantizm" id="romantizm">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">Romantizm</span>
+                        <span class="period-years">1780 – 1860</span>
+                    </div>
+                    <span class="period-tag" style="background:#8a3a1a">20 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Duyguların, doğanın ve bireyselliğin yüceltildiği Romantizm; fırtınalı denizler, dramatik dağlar ve insanın içsel dünyasını tuvale taşır.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text" style="color:#d47a5a">🖼 Tablolar</span>
+                        <div class="section-label-line" style="background:linear-gradient(to right,rgba(212,122,90,0.4),transparent)"></div>
+                    </div>
+                    <div class="art-grid" id="romantizm-tablolar"></div>
+                </div>
+            </div>
+
+            <!-- İZLENİMCİLİK DÖNEMİ -->
+            <div class="period-section period-izlenimcilik" id="izlenimcilik">
+                <div class="period-sticky">
+                    <div class="period-title-wrap">
+                        <span class="period-name">İzlenimcilik</span>
+                        <span class="period-years">1860 – 1900</span>
+                    </div>
+                    <span class="period-tag" style="background:#2a8464">28 Eser Mevcut</span>
+                </div>
+                <div class="period-content">
+                    <div class="period-intro">
+                        <p>Anın geçiciliğini, ışığın dansını ve gündelik yaşamın şiirini yakalayan İzlenimcilik; fırça darbeleriyle renk ve ışığın büyülü birleşimini sunar.</p>
+                    </div>
+
+                    <div class="section-label">
+                        <span class="section-label-text" style="color:#7ad4a8">🖼 Tablolar</span>
+                        <div class="section-label-line" style="background:linear-gradient(to right,rgba(122,212,168,0.4),transparent)"></div>
+                    </div>
+                    <div class="art-grid" id="izlenimcilik-tablolar"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- NEWSLETTER & İLETİŞİM BÖLÜMÜ -->
+        <section class="newsletter-section" id="iletisim">
+            <div class="newsletter-container">
+                <h2 data-aos="fade-up">KOLEKSİYONERE ÖZEL</h2>
+                <p data-aos="fade-up" data-aos-delay="200">Yeni eserler ve özel satışlar için bültenimize katılın</p>
+                <div class="newsletter-form" data-aos="fade-up" data-aos-delay="400">
+                    <input type="email" placeholder="E-posta adresiniz..." id="newsletter-email" name="email">
+                    <button onclick="showToast('Bültene başarıyla abone oldunuz!')">Katıl</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Galeri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p>
+                    <span>Güvenli Ödeme</span> · 
+                    <span>SSL Şifreli</span> · 
+                    <span>Orijinallik Garantili</span>
+                </p>
+            </div>
+        </footer>
+
+        <!-- BACK TO TOP BUTTON -->
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="En üste git">
+            <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+        </button>
+
+        <!-- DESTEK CHAT BUTONU -->
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i>
+                <span>ÆTERNA Destek</span>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- TOAST NOTIFICATION -->
+        <div class="toast" id="toast"></div>
+
+        <!-- SCRIPTS -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+    <!-- Tab Sesli Okuma -->
+    <script>
+    (function() {
+        var synth = window.speechSynthesis;
+        var lastFocused = null;
+        var usingKeyboard = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') usingKeyboard = true;
+        });
+        document.addEventListener('mousedown', function() {
+            usingKeyboard = false;
+        });
+
+        function getLabel(el) {
+            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+            var id = el.id;
+            if (id) {
+                var lbl = document.querySelector('label[for="' + id + '"]');
+                if (lbl) return lbl.innerText.trim();
+            }
+            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+            var text = (el.innerText || el.textContent || '').trim();
+            if (text) return text;
+            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+            return null;
+        }
+
+        document.addEventListener('focusin', function(e) {
+            if (!usingKeyboard) return;
+            var el = e.target;
+            var tag = el.tagName;
+            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+            if (el === lastFocused) return;
+            lastFocused = el;
+            var text = getLabel(el);
+            if (!text) return;
+            synth.cancel();
+            var utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'tr-TR';
+            utt.rate = 1;
+            synth.speak(utt);
+        });
+    })();
+    </script>
+    </body>
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yıldızlı Gece — Vincent van Gogh | ÆTERNA</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* Zoom için magnifying glass efekti */
+            .zoom-container {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .zoom-img {
+                width: 100%;
+                display: block;
+                border-radius: 12px;
+                cursor: crosshair;
+            }
+
+            .zoom-lens {
+                position: absolute;
+                border: 2px solid var(--gold);
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color: rgba(201,168,76,0.1);
+                pointer-events: none;
+                display: none;
+                z-index: 10;
+            }
+
+            .zoom-result {
+                position: fixed;
+                width: 250px;
+                height: 250px;
+                border-radius: 12px;
+                border: 2px solid var(--gold);
+                background-color: var(--dark3);
+                background-repeat: no-repeat;
+                z-index: 1000;
+                display: none;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                pointer-events: none;
+            }
+
+            .product-detail-page {
+                max-width: 1200px;
+                margin: 100px auto 4rem;
+                padding: 0 4vw;
+            }
+            
+            .product-detail-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                background: var(--dark3);
+                border-radius: 16px;
+                border: 1px solid rgba(201,168,76,0.15);
+                overflow: hidden;
+            }
+            
+            .product-image {
+                background: var(--dark4);
+                padding: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .product-image img {
+                width: 100%;
+                max-width: 500px;
+                border-radius: 12px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            }
+            
+            .product-info {
+                padding: 2rem 2rem 2rem 0;
+            }
+            
+            .product-artist {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.8rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 0.5rem;
+            }
+            
+            .product-title {
+                font-family: 'Cinzel', serif;
+                font-size: 2.8rem;
+                color: var(--cream);
+                margin-bottom: 1rem;
+                line-height: 1.2;
+            }
+            
+            .product-title-en {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.2rem;
+                color: var(--text-dim);
+                font-style: italic;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 1px solid rgba(201,168,76,0.2);
+            }
+            
+            .product-description {
+                margin-bottom: 2rem;
+            }
+            
+            .product-description p {
+                color: var(--text);
+                line-height: 1.8;
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .product-specs {
+                background: var(--dark4);
+                border-radius: 12px;
+                padding: 1.2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .spec-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.7rem 0;
+                border-bottom: 1px solid rgba(201,168,76,0.1);
+            }
+            
+            .spec-row:last-child {
+                border-bottom: none;
+            }
+            
+            .spec-label {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+            }
+            
+            .spec-value {
+                font-size: 0.9rem;
+                color: var(--cream);
+            }
+            
+            .product-price-section {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(201,168,76,0.2);
+                margin-bottom: 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .product-price {
+                font-family: 'Cinzel', serif;
+                font-size: 2rem;
+                color: var(--gold);
+                font-weight: 700;
+            }
+            
+            .detail-add-to-cart {
+                background: var(--gold);
+                color: var(--dark);
+                border: none;
+                padding: 0.8rem 1.8rem;
+                font-family: 'Cinzel', serif;
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+                cursor: pointer;
+                transition: all 0.3s;
+                border-radius: 40px;
+                font-weight: 600;
+            }
+            
+            .detail-add-to-cart:hover {
+                background: var(--gold-light);
+                transform: translateY(-2px);
+            }
+            
+            .detail-add-to-cart.disabled {
+                background: #5a5a5a;
+                color: #8a8a8a;
+                cursor: not-allowed;
+                opacity: 0.6;
+                pointer-events: none;
+            }
+            
+            .back-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: transparent;
+                border: 1px solid var(--gold-dim);
+                color: var(--gold);
+                padding: 0.5rem 1rem;
+                font-family: 'Cinzel', serif;
+                font-size: 0.7rem;
+                cursor: pointer;
+                transition: all 0.3s;
+                border-radius: 6px;
+                text-decoration: none;
+                margin-bottom: 2rem;
+            }
+            
+            .back-btn:hover {
+                background: var(--gold);
+                color: var(--dark);
+            }
+
+            /* Sesli okuma butonları (İnci Küpeli Kız stili) */
+            .audio-buttons {
+                display: flex;
+                gap: 0.7rem;
+                flex-wrap: wrap;
+                margin-top: 1rem;
+            }
+            
+            .read-btn, .stop-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.55rem 1.4rem;
+                font-family: 'Cinzel', serif;
+                font-size: 0.75rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.3s;
+                border-radius: 40px;
+            }
+            
+            .read-btn {
+                background: transparent;
+                border: 1px solid var(--gold-dim);
+                color: var(--gold);
+            }
+            
+            .read-btn:hover {
+                background: var(--gold-dim);
+                color: var(--cream);
+            }
+            
+            .stop-btn {
+                background: var(--gold);
+                border: none;
+                color: var(--dark);
+            }
+            
+            .stop-btn:hover {
+                background: var(--gold-light);
+                transform: scale(1.02);
+            }
+            
+            @media (max-width: 768px) {
+                .product-detail-container {
+                    grid-template-columns: 1fr;
+                }
+                .product-info {
+                    padding: 0 2rem 2rem 2rem;
+                }
+                .product-title {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Æ<span>TERNA</span></a>
+            <nav>
+                <a href="#ronesans">Rönesans</a>
+                <a href="#barok">Barok</a>
+                <a href="#rokoko">Rokoko</a>
+                <a href="#noklasik">Neoklasizm</a>
+                <a href="#romantizm">Romantizm</a>
+                <a href="#izlenimcilik">İzlenimcilik</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="header-right">
+                <button class="accessibility-trigger-btn" id="accessibilityTriggerBtn" aria-label="Erişilebilir Arama">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <div class="search-container">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <div class="search-header">
+                            <i class="fas fa-search"></i>
+                            <span>Eser Ara</span>
+                            <button class="close-search" id="closeSearch">✕</button>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Sanatçı veya eser adı yazın...">
+                        <div class="filter-options">
+                            <h4>Dönem Filtresi</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-period="all">Tümü</button>
+                                <button class="filter-btn" data-period="ronesans">Rönesans</button>
+                                <button class="filter-btn" data-period="barok">Barok</button>
+                                <button class="filter-btn" data-period="rokoko">Rokoko</button>
+                                <button class="filter-btn" data-period="noklasik">Neoklasizm</button>
+                                <button class="filter-btn" data-period="romantizm">Romantizm</button>
+                                <button class="filter-btn" data-period="izlenimcilik">İzlenimcilik</button>
+                            </div>
+                        </div>
+                        <div class="search-results" id="searchResults">
+                            <p class="search-hint">Arama yapmak için yazın...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu-container">
+                    <button class="user-btn" id="userBtn">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="far fa-user-circle"></i>
+                            <span>Hesabım</span>
+                        </div>
+                        <ul class="dropdown-menu-items">
+                            <li><a href="giris.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                            <li><a href="kayit.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            <li class="divider"></li>
+                            <li><a href="siparislerim.html"><i class="fas fa-box"></i> Siparişlerim</a></li>
+                            <li><a href="#" onclick="showToast('İadelerim sayfası açılıyor...'); return false;"><i class="fas fa-undo-alt"></i> İadelerim</a></li>
+                            <li><a href="#" onclick="showToast('Ödemelerim sayfası açılıyor...'); return false;"><i class="fas fa-credit-card"></i> Ödemelerim</a></li>
+                            <li><a href="favorilerim.html"><i class="fas fa-heart"></i> Favorilerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="cart-btn" onclick="window.location.href='sepet.html'">
+                    <i class="fas fa-shopping-cart"></i> Sepet <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ERİŞİLEBİLİRLİK ARAMA PANELİ (BÜYÜK, BASİT) -->
+        <div class="accessibility-overlay" id="accessibilityOverlay" role="dialog" aria-label="Erişilebilir arama paneli" aria-modal="true">
+            <div class="accessibility-modal">
+                <div class="accessibility-header">
+                    <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
+                    <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
+                </div>
+                
+                <div class="accessibility-input-wrapper">
+                    <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
+                    <input type="text" id="accessibilityInput" 
+                        placeholder="Örnek: Mona Lisa, Yıldızlı Gece, Rönesans..." 
+                        autocomplete="off"
+                        style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
+                </div>
+                
+                <div class="accessibility-filters">
+                    <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
+                    <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
+                    <button class="accessibility-filter-chip" data-filter="barok">Barok</button>
+                    <button class="accessibility-filter-chip" data-filter="rokoko">Rokoko</button>
+                    <button class="accessibility-filter-chip" data-filter="neoklasizm">Neoklasizm</button>
+                    <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
+                    <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
+                </div>
+                
+                <div class="accessibility-results" id="accessibilityResults">
+                    <div class="accessibility-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Bir sanat eseri aramak için yazın...</p>
+                    </div>
+                </div>
+                
+                <div class="accessibility-footer">
+                    <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-detail-page">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Galeriye Dön</a>
+            
+            <div class="product-detail-container" data-aos="fade-up">
+                <div class="product-image" data-aos="fade-right">
+                    <div class="zoom-container">
+                        <img src="yildizli-gece.png" alt="Yıldızlı Gece - Vincent van Gogh" class="zoom-img" id="zoomImg">
+                        <div class="zoom-lens" id="zoomLens"></div>
+                    </div>
+                    <div class="zoom-result" id="zoomResult"></div>
+                </div>
+                
+                <div class="product-info" data-aos="fade-left">
+                    <div class="product-artist">Vincent van Gogh</div>
+                    <h1 class="product-title">Yıldızlı Gece</h1>
+                    <div class="product-title-en">The Starry Night</div>
+                    
+                    <div class="product-description">
+                        <p>Vincent van Gogh'un başyapıtı "Yıldızlı Gece", modern sanatın en tanınmış eserlerinden biridir. 1889 yılında, sanatçının Saint-Rémy-de-Provence'taki Saint-Paul-de-Mausole akıl hastanesinde kaldığı dönemde yapılmıştır. Tablo, sanatçının duygusal dünyasını ve doğa ile olan derin bağını yansıtır.</p>
+                        <p>Eser, dönen bulutları, parlayan yıldızları ve uyuyan köyü gösteren bir gece manzarasını tasvir eder. Van Gogh'un karakteristik fırça darbeleri ve canlı renkleri, tabloya adeta hareket kazandırır. Özellikle gökyüzündeki girdaplı desenler, sanatçının benzersiz üslubunun en güzel örneklerindendir.</p>
+                    </div>
+                    
+                    <div class="product-specs">
+                        <div class="spec-row">
+                            <span class="spec-label">Yıl</span>
+                            <span class="spec-value">1889</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Teknik</span>
+                            <span class="spec-value">Tuval üzerine yağlıboya</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Boyutlar</span>
+                            <span class="spec-value">73.7 × 92.1 cm (29 × 36.25 in)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Dönem</span>
+                            <span class="spec-value">Post-Empresyonizm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Malzeme</span>
+                            <span class="spec-value">Yağlı boya, Kanvas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-price-section">
+                        <div>
+                            <span class="product-price">₺5499</span>
+                        </div>
+                        <button class="detail-add-to-cart" id="addToCartBtn" onclick="addToCartAndRedirect('Yıldızlı Gece')">
+                            <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                        </button>
+                    </div>
+                    
+                    <!-- Sesli okuma butonları -->
+                    <div class="audio-buttons">
+                        <button id="readArtBtn" class="read-btn" aria-label="Eseri sesli oku">
+                            ▶ Eseri Sesli Oku
+                        </button>
+                        <button id="stopArtBtn" class="stop-btn" style="display: none;" aria-label="Okumayı durdur">
+                            ⏹ Durdur
+                        </button>
+                    </div>
+                    
+                    <div style="font-size: 0.7rem; color: var(--text-dim); text-align: center; margin-top: 1rem;">
+                        <i class="fas fa-truck"></i> Ücretsiz Kargo | 
+                        <i class="fas fa-shield-alt"></i> Orijinallik Sertifikalı | 
+                        <i class="fas fa-palette"></i> El İşçiliği
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eser Hakkında Detaylı Bilgi (Yıldızlı Gece'ye özel orijinal metin) -->
+            <div class="product-detail-container" style="margin-top: 2rem;" data-aos="fade-up">
+                <div class="product-info" style="padding: 2rem;">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 1.5rem;">Eser Hakkında</h2>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">"Yıldızlı Gece", Van Gogh'un en ikonik eseri olmasının yanı sıra, sanatçının ruh halini en iyi yansıtan tablolarından biridir. Van Gogh bu tabloyu hastanede kaldığı süre boyunca, hücresinin penceresinden gördüğü manzarayı hayal gücüyle birleştirerek yapmıştır. Tablodaki köy kısmı tamamen hayal ürünüdür, gerçekte Saint-Rémy'deki kilisenin kulesi farklı bir mimariye sahiptir.</p>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">Tablonun en çarpıcı özelliği, gökyüzündeki girdap şeklindeki bulutlardır. Bu desenler, Van Gogh'un galaksi ve nebulalara olan ilgisini yansıtmaktadır. Sanatçı, bu tabloda doğanın sakinliği ile kendi içsel huzursuzluğu arasında bir denge kurmuştur.</p>
+                    <p style="color: var(--text); line-height: 1.8;">"Yıldızlı Gece", Van Gogh'un yaşamı boyunca pek ilgi görmemiş, ancak 20. yüzyılda post-empresyonizmin en önemli eserlerinden biri olarak kabul edilmiştir. Günümüzde New York'taki MoMA Müzesi'nin en değerli eserlerinden biridir ve her yıl milyonlarca sanatsever tarafından ziyaret edilmektedir.</p>
+                </div>
+                <div class="product-image" style="background: none; padding: 1rem;">
+                    <img src="the-starry-night-vincent-van-gogh.jpg" alt="Yıldızlı Gece detay" style="max-width: 100%;">
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <span class="footer-logo">ÆTERNA</span>
+                    <p class="footer-desc">Çağların ötesinden gelen eserleri koleksiyonerinizle buluşturuyoruz. Her satın alma, bir tarihin parçasına sahip çıkmaktır.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sosyal Medya</h4>
+                    <ul class="social-media-list">
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i> @aeternagaleri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-pinterest"></i> aeterna_galeri</a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-youtube"></i> Aeterna Galeri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="#">Özgünlük Sertifikası</a></li>
+                        <li><a href="#">Kargo & Teslimat</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul class="contact-list">
+                        <li><a href="#"><i class="fas fa-phone"></i> +90 212 555 0101</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@aeterna.art</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Merkez Mağazamıza Hafta içi 09:00 - 17:30 <br> Cumartesi 09:00 - 17:30 <br> Pazar 11:00 - 19:00 saatleri arasında ulaşabilirsiniz.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2020 ÆTERNA Sanat Galerisi. Tüm hakları saklıdır.</p>
+                <p><span>Güvenli Ödeme</span> · <span>SSL Şifreli</span> · <span>Orijinallik Garantili</span></p>
+            </div>
+        </footer>
+
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l-8 8h5v8h6v-8h5z" fill="var(--dark)"/></svg>
+        </button>
+
+        <!-- DESTEK CHAT BUTONU -->
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i>
+                <span>ÆTERNA Destek</span>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+            
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('aeterna_cart') || '[]');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) cartCountSpan.textContent = totalItems;
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+            
+            function addToCartAndRedirect(title) {
+                let foundProduct = null;
+                if (window.products) {
+                    if (window.products.popular) {
+                        foundProduct = window.products.popular.find(p => p.title === title);
+                    }
+                    if (!foundProduct && window.products.barok) {
+                        foundProduct = window.products.barok.tablolar.find(p => p.title === title);
+                    }
+                }
+                
+                if (foundProduct && foundProduct.badge === 'sold') {
+                    showToast('Bu ürün satılmıştır, sepete eklenemez!');
+                    return;
+                }
+                
+                let cart = JSON.parse(localStorage.getItem('aeterna_cart') || '[]');
+                const existingIndex = cart.findIndex(item => item.title === title);
+                
+                if (existingIndex > -1) {
+                    cart[existingIndex].quantity += 1;
+                } else {
+                    cart.push({
+                        title: title,
+                        artist: "Vincent van Gogh",
+                        year: 1889,
+                        price: 5499,
+                        img: "yildizli-gece.png",
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('aeterna_cart', JSON.stringify(cart));
+                updateCartCount();
+                showToast(`"${title}" sepete eklendi!`);
+            }
+            
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                updateCartCount();
+            });
+
+            // Zoom efekti
+            function initZoom() {
+                const img = document.getElementById('zoomImg');
+                const lens = document.getElementById('zoomLens');
+                const result = document.getElementById('zoomResult');
+                
+                if (!img || !lens || !result) return;
+                
+                document.body.appendChild(result);
+                
+                const lensSize = 100;
+                const resultSize = 250;
+                
+                lens.style.width = lensSize + 'px';
+                lens.style.height = lensSize + 'px';
+                result.style.width = resultSize + 'px';
+                result.style.height = resultSize + 'px';
+                
+                function zoom(e) {
+                    const rect = img.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+                    
+                    let lensX = x - lensSize / 2;
+                    let lensY = y - lensSize / 2;
+                    
+                    if (lensX < 0) lensX = 0;
+                    if (lensY < 0) lensY = 0;
+                    if (lensX > rect.width - lensSize) lensX = rect.width - lensSize;
+                    if (lensY > rect.height - lensSize) lensY = rect.height - lensSize;
+                    
+                    lens.style.left = lensX + 'px';
+                    lens.style.top = lensY + 'px';
+                    
+                    const ratioX = img.naturalWidth / rect.width;
+                    const ratioY = img.naturalHeight / rect.height;
+                    
+                    const bgX = -lensX * ratioX;
+                    const bgY = -lensY * ratioY;
+                    
+                    result.style.backgroundImage = `url('${img.src}')`;
+                    result.style.backgroundSize = `${img.naturalWidth}px ${img.naturalHeight}px`;
+                    result.style.backgroundPosition = `${bgX}px ${bgY}px`;
+                    
+                    let resultLeft = e.clientX + 15;
+                    let resultTop = e.clientY + 15;
+                    
+                    if (resultLeft + resultSize > window.innerWidth) {
+                        resultLeft = e.clientX - resultSize - 15;
+                    }
+                    if (resultTop + resultSize > window.innerHeight) {
+                        resultTop = e.clientY - resultSize - 15;
+                    }
+                    
+                    result.style.left = resultLeft + 'px';
+                    result.style.top = resultTop + 'px';
+                }
+                
+                img.addEventListener('mouseenter', () => {
+                    lens.style.display = 'block';
+                    result.style.display = 'block';
+                });
+                
+                img.addEventListener('mouseleave', () => {
+                    lens.style.display = 'none';
+                    result.style.display = 'none';
+                });
+                
+                img.addEventListener('mousemove', zoom);
+            }
+            
+            window.addEventListener('load', function() {
+                setTimeout(() => { initZoom(); }, 500);
+            });
+
+            // ===== SESLİ OKUMA ÖZELLİKLERİ =====
+            (function() {
+                const synth = window.speechSynthesis;
+                const readBtn = document.getElementById('readArtBtn');
+                const stopBtn = document.getElementById('stopArtBtn');
+                if (!readBtn) return;
+
+                function collectArtText() {
+                    const parts = [];
+                    const artist = document.querySelector('.product-artist');
+                    if (artist) parts.push(artist.innerText.trim());
+                    const title = document.querySelector('.product-title');
+                    if (title) parts.push(title.innerText.trim());
+                    const titleEn = document.querySelector('.product-title-en');
+                    if (titleEn) parts.push(titleEn.innerText.trim());
+                    const desc = document.querySelector('.product-description');
+                    if (desc) desc.querySelectorAll('p').forEach(p => { parts.push(p.innerText.trim()); });
+                    document.querySelectorAll('.spec-row').forEach(row => {
+                        const lbl = row.querySelector('.spec-label');
+                        const val = row.querySelector('.spec-value');
+                        if (lbl && val) parts.push(lbl.innerText.trim() + ': ' + val.innerText.trim());
+                    });
+                    const price = document.querySelector('.product-price');
+                    if (price) parts.push('Fiyat: ' + price.innerText.trim());
+                    document.querySelectorAll('.product-detail-container p').forEach(p => {
+                        const t = p.innerText.trim();
+                        if (t && !parts.includes(t)) parts.push(t);
+                    });
+                    return parts.join('. ');
+                }
+
+                readBtn.addEventListener('click', function() {
+                    synth.cancel();
+                    const utt = new SpeechSynthesisUtterance(collectArtText());
+                    utt.lang = 'tr-TR';
+                    utt.rate = 0.95;
+                    utt.onstart = function() {
+                        readBtn.style.display = 'none';
+                        stopBtn.style.display = 'inline-flex';
+                    };
+                    utt.onend = utt.onerror = function() {
+                        readBtn.style.display = 'inline-flex';
+                        stopBtn.style.display = 'none';
+                    };
+                    synth.speak(utt);
+                });
+
+                stopBtn.addEventListener('click', function() {
+                    synth.cancel();
+                    readBtn.style.display = 'inline-flex';
+                    stopBtn.style.display = 'none';
+                });
+            })();
+
+            // ===== TAB İLE GEZİNCE SESLİ OKUMA (Görme engelli desteği) =====
+            (function() {
+                const synth = window.speechSynthesis;
+                let lastFocused = null;
+                let usingKeyboard = false;
+
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Tab') usingKeyboard = true;
+                });
+                document.addEventListener('mousedown', function() { usingKeyboard = false; });
+
+                function getLabel(el) {
+                    if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+                    const id = el.id;
+                    if (id) {
+                        const lbl = document.querySelector('label[for="' + id + '"]');
+                        if (lbl) return lbl.innerText.trim();
+                    }
+                    if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+                    const text = (el.innerText || el.textContent || '').trim();
+                    if (text && text.length < 150) return text;
+                    if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+                    if (el.tagName === 'BUTTON') return text || 'buton';
+                    if (el.tagName === 'A') return text || 'bağlantı';
+                    return null;
+                }
+
+                document.addEventListener('focusin', function(e) {
+                    if (!usingKeyboard) return;
+                    const el = e.target;
+                    const readable = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'DETAILS', 'SUMMARY'];
+                    if (!readable.includes(el.tagName) && !el.hasAttribute('tabindex')) return;
+                    if (el === lastFocused) return;
+                    lastFocused = el;
+                    const text = getLabel(el);
+                    if (!text) return;
+                    synth.cancel();
+                    const utt = new SpeechSynthesisUtterance(text);
+                    utt.lang = 'tr-TR';
+                    utt.rate = 1;
+                    synth.speak(utt);
+                });
+            })();
+        </script>
+    </body>
+</html>
