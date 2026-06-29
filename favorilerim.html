@@ -483,9 +483,11 @@
                     return;
                 }
                 
-                // Ürünleri göster
-                container.innerHTML = favoriteProducts.map(item => `
-                    <div class="favorite-card" onclick="window.location.href='detay.html?eser=${encodeURIComponent(item.title)}'">
+                // Favori ürünleri göster
+                container.innerHTML = favoriteProducts.map(item => {
+                    const detailUrl = item.detailPage || `detay.html?eser=${encodeURIComponent(item.title)}`;
+                    return `
+                    <div class="favorite-card" onclick="window.location.href='${detailUrl}'">
                         <div class="art-img-wrap">
                             <img src="${item.img || 'placeholder.png'}" alt="${item.title}" class="art-img" onerror="this.src='https://placehold.co/400x533/1c1610/c9a84c?text=Art'">
                             <button class="fav-btn" onclick="event.stopPropagation();removeFromFavorites('${item.title.replace(/'/g, "\\'")}')">
@@ -509,7 +511,8 @@
                             </div>
                         </div>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
             }
             
             // Favorilerden kaldır

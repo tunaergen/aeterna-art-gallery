@@ -526,8 +526,11 @@
                     const itemTotal = item.price * item.quantity;
                     subtotal += itemTotal;
                     
+                    // detailPage bilgisini bul
+                    const detailUrl = item.detailPage || `detay.html?eser=${encodeURIComponent(item.title)}`;
+
                     itemsHtml += `
-                        <div class="cart-item" data-index="${index}">
+                        <div class="cart-item" data-index="${index}" onclick="window.location.href='${detailUrl}'" style="cursor:pointer;">
                             <div class="cart-item-img">
                                 <img src="${item.img || 'placeholder.png'}" alt="${item.title}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;" onerror="this.src='https://placehold.co/80x80/1c1610/c9a84c?text=Art'">
                             </div>
@@ -536,13 +539,13 @@
                                 <p>${item.artist} · ${item.year}</p>
                             </div>
                             <div class="cart-item-price">₺${item.price.toLocaleString('tr-TR')}</div>
-                            <div class="cart-item-quantity">
-                                <button onclick="updateQuantity(${index}, -1)">-</button>
+                            <div class="cart-item-quantity" onclick="event.stopPropagation();">
+                                <button onclick="event.stopPropagation();updateQuantity(${index}, -1)">-</button>
                                 <span>${item.quantity}</span>
-                                <button onclick="updateQuantity(${index}, 1)">+</button>
+                                <button onclick="event.stopPropagation();updateQuantity(${index}, 1)">+</button>
                             </div>
                             <div class="cart-item-total">₺${itemTotal.toLocaleString('tr-TR')}</div>
-                            <button class="cart-item-remove" onclick="removeFromCart(${index})">✕</button>
+                            <button class="cart-item-remove" onclick="event.stopPropagation();removeFromCart(${index})">✕</button>
                         </div>
                     `;
                 });
