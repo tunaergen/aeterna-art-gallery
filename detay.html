@@ -1,10 +1,6 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   const eserAdi = params.get('eser');
-
-  // Türkçe karakterleri temizle ve standart formata getir
-  const temizEser = eserAdi.replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o');
-  const dosyaAdi = temizEser.toLowerCase().replace(/ /g, '-') + '.html';
-
-  window.location.href = dosyaAdi;
+  // Dosya isminin aynısı URL'den geliyorsa direkt yönlendir
+  window.location.href = eserAdi + '.html';
 </script>
