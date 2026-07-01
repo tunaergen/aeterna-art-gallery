@@ -1,6 +1,20 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   const eserAdi = params.get('eser');
-  // Dosya isminin aynısı URL'den geliyorsa direkt yönlendir
-  window.location.href = eserAdi + '.html';
+
+  // 1. Küçük harfe çevir
+  // 2. Türkçe karakterleri düzelt
+  // 3. Boşlukları tireye çevir
+  // 4. .html ekle
+  const dosyaAdi = eserAdi.toLowerCase()
+    .replace(/ç/g, 'c')
+    .replace(/ı/g, 'i')
+    .replace(/ş/g, 's')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ö/g, 'o')
+    .replace(/İ/g, 'i') // Büyük İ özel durumu
+    .replace(/ /g, '-') + '.html';
+
+  window.location.href = dosyaAdi;
 </script>
