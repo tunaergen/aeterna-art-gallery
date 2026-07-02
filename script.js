@@ -2,69 +2,69 @@
 const products = {
     // Popüler ürünler (çok satanlar)
     popular: [
-        { artist: "Johannes Vermeer", title: "İnci Küpeli Kız", year: 1665, price: 3314, oldPrice: 3899, discount: 15, type: "tablo", badge: null, img: "inci-kupeli-kiz.png", detailPage: "inci-kupeli-kiz.html"},
-        { artist: "Vincent van Gogh", title: "Yıldızlı Gece", year: 1889, price: 5499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "yildizli-gece.png", detailPage: "yildizli-gece.html"},
-        { artist: "Leonardo da Vinci", title: "Mona Lisa", year: 1503, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "mona-lisa.png", detailPage: "mona-lisa.html"},
-        { artist: "Edvard Munch", title: "Çığlık", year: 1893, price: 4080, oldPrice: 4799, discount: 15, type: "tablo", badge: null, img: "ciglik.png", detailPage: "ciglik.html"}
+        { artist: "Johannes Vermeer", title: "İnci Küpeli Kız", year: 1665, price: 3314, oldPrice: 3899, discount: 15, type: "tablo", badge: null, img: "inci-kupeli-kiz.png", detailPage: "inci-kupeli-kiz.html" },
+        { artist: "Vincent van Gogh", title: "Yıldızlı Gece", year: 1889, price: 5499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "yildizli-gece.png", detailPage: "yildizli-gece.html" },
+        { artist: "Leonardo da Vinci", title: "Mona Lisa", year: 1503, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "mona-lisa.png", detailPage: "mona-lisa.html" },
+        { artist: "Edvard Munch", title: "Çığlık", year: 1893, price: 4080, oldPrice: 4799, discount: 15, type: "tablo", badge: null, img: "ciglik.png", detailPage: "ciglik.html" }
     ],
     
-    // RÖNESANS DÖNEMİ (GERÇEK ESERLER)
+    // RÖNESANS DÖNEMİ
     ronesans: {
         tablolar: [
-            { artist: "Leonardo da Vinci", title: "Mona Lisa", year: 1503, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "mona-lisa.png", detailPage: "mona-lisa.html"},
-            { artist: "Leonardo da Vinci", title: "Son Akşam Yemeği", year: 1498, price: 4499, oldPrice: 5292, discount: 15, type: "tablo", badge: null, img: "son-aksam-yemegi.png" },
-            { artist: "Michelangelo", title: "Adem'in Yaratılışı", year: 1512, price: 4943, oldPrice: null, discount: null, type: "tablo", badge: null, img: "ademin-yaratilisi.png" },
-            { artist: "Raphael", title: "Atina Okulu", year: 1511, price: 5354, oldPrice: 6299, discount: 15, type: "tablo", badge: null, img: "atina-okulu.png" }
+            { artist: "Leonardo da Vinci", title: "Mona Lisa", year: 1503, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "mona-lisa.png", detailPage: "mona-lisa.html" },
+            { artist: "Leonardo da Vinci", title: "Son Akşam Yemeği", year: 1498, price: 4499, oldPrice: 5292, discount: 15, type: "tablo", badge: null, img: "son-aksam-yemegi.png", detailPage: "son-aksam-yemegi.html" },
+            { artist: "Michelangelo", title: "Adem'in Yaratılışı", year: 1512, price: 4943, oldPrice: null, discount: null, type: "tablo", badge: null, img: "ademin-yaratilisi.png", detailPage: "ademin-yaratilisi.html" },
+            { artist: "Raphael", title: "Atina Okulu", year: 1511, price: 5354, oldPrice: 6299, discount: 15, type: "tablo", badge: null, img: "atina-okulu.png", detailPage: "atina-okulu.html" }
         ]
     },
 
-    // BAROK DÖNEMİ (GERÇEK ESERLER)
+    // BAROK DÖNEMİ
     barok: {
         tablolar: [
-            { artist: "Caravaggio", title: "Aziz Matta'nın Çağrısı", year: 1600, price: 3499, oldPrice: 4117, discount: 15, type: "tablo", badge: null, img: "aziz-matta.png" },
-            { artist: "Rembrandt", title: "Gece Devriyesi", year: 1642, price: 5999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "gece-devriyesi.png" },
+            { artist: "Caravaggio", title: "Aziz Matta'nın Çağrısı", year: 1600, price: 3499, oldPrice: 4117, discount: 15, type: "tablo", badge: null, img: "aziz-matta.png", detailPage: "aziz-matta.html" },
+            { artist: "Rembrandt", title: "Gece Devriyesi", year: 1642, price: 5999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "gece-devriyesi.png", detailPage: "gece-devriyesi.html" },
             { artist: "Johannes Vermeer", title: "İnci Küpeli Kız", year: 1665, price: 3314, oldPrice: 3899, discount: 15, type: "tablo", badge: null, img: "inci-kupeli-kiz.png", detailPage: "inci-kupeli-kiz.html"},
-            { artist: "Peter Paul Rubens", title: "Üç Güzeller", year: 1635, price: 3899, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "uc-guzeller.png" }
+            { artist: "Peter Paul Rubens", title: "Üç Güzeller", year: 1635, price: 3899, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "uc-guzeller.png", detailPage: "uc-guzeller.html" }
         ]
     }, 
     
-    // ROKOKO DÖNEMİ (GERÇEK ESERLER)
+    // ROKOKO DÖNEMİ
     rokoko: {
         tablolar: [
-            { artist: "Jean-Honoré Fragonard", title: "Salıncak", year: 1767, price: 3699, oldPrice: 4.351, discount: 15, type: "tablo", badge: null, img: "salincak.png" },
-            { artist: "François Boucher", title: "Madame de Pompadour", year: 1756, price: 3499, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "madame-pompadour.png" },
-            { artist: "Jean-Antoine Watteau", title: "Cythera'ya Hac", year: 1717, price: 3199, oldPrice: null, discount: null, type: "tablo", badge: null, img: "cytheraya-hac.png" },
-            { artist: "Giovanni Tiepolo", title: "Kleopatra'nın Şöleni", year: 1744, price: 4299, oldPrice: null, discount: null, type: "tablo", badge: null, img: "kleopatra.png" }
+            { artist: "Jean-Honoré Fragonard", title: "Salıncak", year: 1767, price: 3699, oldPrice: 4351, discount: 15, type: "tablo", badge: null, img: "salincak.png", detailPage: "salincak.html" },
+            { artist: "François Boucher", title: "Madame de Pompadour", year: 1756, price: 3499, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "madame-pompadour.png", detailPage: "madame-pompadour.html" },
+            { artist: "Jean-Antoine Watteau", title: "Cythera'ya Hac", year: 1717, price: 3199, oldPrice: null, discount: null, type: "tablo", badge: null, img: "cytheraya-hac.png", detailPage: "cytheraya-hac.html" },
+            { artist: "Giovanni Tiepolo", title: "Kleopatra'nın Şöleni", year: 1744, price: 4299, oldPrice: null, discount: null, type: "tablo", badge: null, img: "kleopatra.png", detailPage: "kleopatra.html" }
         ]
     },
     
-    // NEOKLASİZM (GERÇEK ESERLER)
+    // NEOKLASİZM
     noklasik: {
         tablolar: [
-            { artist: "Jacques-Louis David", title: "Horatii'lerin Yemini", year: 1784, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "horatiiler.png" },
-            { artist: "Jean-Auguste Ingres", title: "Büyük Odalık", year: 1814, price: 3655, oldPrice: 4299, discount: 15, type: "tablo", badge: null, img: "buyuk-odalik.png" },
-            { artist: "Élisabeth Vigée Le Brun", title: "Marie Antoinette Portresi", year: 1783, price: 4499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "marie-antoinette.png" },
-            { artist: "Benjamin West", title: "Wolfe'un Ölümü", year: 1770, price: 4199, oldPrice: null, discount: null, type: "tablo", badge: null, img: "wolfeun-olum.png" }
+            { artist: "Jacques-Louis David", title: "Horatii'lerin Yemini", year: 1784, price: 4999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "horatiiler.png", detailPage: "horatiiler.html" },
+            { artist: "Jean-Auguste Ingres", title: "Büyük Odalık", year: 1814, price: 3655, oldPrice: 4299, discount: 15, type: "tablo", badge: null, img: "buyuk-odalik.png", detailPage: "buyuk-odalik.html" },
+            { artist: "Élisabeth Vigée Le Brun", title: "Marie Antoinette Portresi", year: 1783, price: 4499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "marie-antoinette.png", detailPage: "marie-antoinette.html" },
+            { artist: "Benjamin West", title: "Wolfe'un Ölümü", year: 1770, price: 4199, oldPrice: null, discount: null, type: "tablo", badge: null, img: "wolfeun-olum.png", detailPage: "wolfeun-olum.html" }
         ]
     },
     
-    // ROMANTİZM (GERÇEK ESERLER)
+    // ROMANTİZM
     romantizm: {
         tablolar: [
-            { artist: "Eugène Delacroix", title: "Halka Yol Gösteren Özgürlük", year: 1830, price: 6499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "ozgurluk.png" },
-            { artist: "Caspar David Friedrich", title: "Sis Denizi Üzerinde Gezgin", year: 1818, price: 4399, oldPrice: 5175, discount: 15, type: "tablo", badge: null, img: "gezgin.png" },
-            { artist: "J.M.W. Turner", title: "Savaşçı Temeraire", year: 1839, price: 5299, oldPrice: null, discount: null, type: "tablo", badge: null, img: "temeraire.png" },
-            { artist: "Théodore Géricault", title: "Medusa'nın Salı", year: 1819, price: 7499, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "medusa.png" }
+            { artist: "Eugène Delacroix", title: "Halka Yol Gösteren Özgürlük", year: 1830, price: 6499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "ozgurluk.png", detailPage: "ozgurluk.html" },
+            { artist: "Caspar David Friedrich", title: "Sis Denizi Üzerinde Gezgin", year: 1818, price: 4399, oldPrice: 5175, discount: 15, type: "tablo", badge: null, img: "gezgin.png", detailPage: "gezgin.html" },
+            { artist: "J.M.W. Turner", title: "Savaşçı Temeraire", year: 1839, price: 5299, oldPrice: null, discount: null, type: "tablo", badge: null, img: "temeraire.png", detailPage: "temeraire.html" },
+            { artist: "Théodore Géricault", title: "Medusa'nın Salı", year: 1819, price: 7499, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "medusa.png", detailPage: "medusa.html" }
         ]
     },
     
-    // İZLENİMCİLİK (GERÇEK ESERLER)
+    // İZLENİMCİLİK
     izlenimcilik: {
         tablolar: [
-            { artist: "Claude Monet", title: "Nilüferler", year: 1906, price: 5999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "niluferler.png" },
-            { artist: "Pierre-Auguste Renoir", title: "Moulin de la Galette", year: 1876, price: 6499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "moulin.png" },
-            { artist: "Edgar Degas", title: "Dans Sınıfı", year: 1874, price: 4899, oldPrice: null, discount: null, type: "tablo", badge: null, img: "dans-sinifi.png" },
-            { artist: "Berthe Morisot", title: "Beşik", year: 1872, price: 3999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "besik.png" }
+            { artist: "Claude Monet", title: "Nilüferler", year: 1906, price: 5999, oldPrice: null, discount: null, type: "tablo", badge: "sold", img: "niluferler.png", detailPage: "niluferler.html" },
+            { artist: "Pierre-Auguste Renoir", title: "Moulin de la Galette", year: 1876, price: 6499, oldPrice: null, discount: null, type: "tablo", badge: null, img: "moulin.png", detailPage: "moulin.html" },
+            { artist: "Edgar Degas", title: "Dans Sınıfı", year: 1874, price: 4899, oldPrice: null, discount: null, type: "tablo", badge: null, img: "dans-sinifi.png", detailPage: "dans-sinifi.html" },
+            { artist: "Berthe Morisot", title: "Beşik", year: 1872, price: 3999, oldPrice: null, discount: null, type: "tablo", badge: null, img: "besik.png", detailPage: "besik.html" }
         ]
     }
 };
@@ -326,6 +326,7 @@ function addToCart(title) {
                 year: foundProduct.year,
                 price: foundProduct.oldPrice ? foundProduct.price : foundProduct.price,
                 img: foundProduct.img,
+                detailPage: foundProduct.detailPage,
                 quantity: 1
             });
         }

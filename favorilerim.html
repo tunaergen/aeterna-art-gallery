@@ -485,7 +485,7 @@
                 
                 // Favori ürünleri göster
                 container.innerHTML = favoriteProducts.map(item => {
-                    const detailUrl = item.detailPage || `detay.html?eser=${encodeURIComponent(item.title)}`;
+                    const detailUrl = item.detailPage || `${item.title.toLowerCase().replace(/ /g, '-')}.html`;
                     return `
                     <div class="favorite-card" onclick="window.location.href='${detailUrl}'">
                         <div class="art-img-wrap">

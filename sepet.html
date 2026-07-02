@@ -526,11 +526,47 @@
                     const itemTotal = item.price * item.quantity;
                     subtotal += itemTotal;
                     
-                    // detailPage bilgisini bul
-                    const detailUrl = item.detailPage || `detay.html?eser=${encodeURIComponent(item.title)}`;
+                    // Eser ismine göre dosya adı eşleştirme
+                    const eserMap = {
+                        "Yıldızlı Gece": "yildizli-gece",
+                        "Çığlık": "ciglik",
+                        "İnci Küpeli Kız": "inci-kupeli-kiz",
+                        "Mona Lisa": "mona-lisa",
+                        "Son Akşam Yemeği": "son-aksam-yemegi",
+                        "Adem'in Yaratılışı": "ademin-yaratilisi",
+                        "Atina Okulu": "atina-okulu",
+                        "Aziz Matta'nın Çağrısı": "aziz-matta",
+                        "Gece Devriyesi": "gece-devriyesi",
+                        "Üç Güzeller": "uc-guzeller",
+                        "Salıncak": "salincak",
+                        "Madame de Pompadour": "madame-pompadour",
+                        "Cythera'ya Hac": "cytheraya-hac",
+                        "Kleopatra'nın Şöleni": "kleopatra",
+                        "Horatii'lerin Yemini": "horatiiler",
+                        "Büyük Odalık": "buyuk-odalik",
+                        "Marie Antoinette Portresi": "marie-antoinette",
+                        "Wolfe'un Ölümü": "wolfeun-olum",
+                        "Nilüferler": "niluferler",
+                        "Moulin de la Galette": "moulin",
+                        "Dans Sınıfı": "dans-sinifi",
+                        "Beşik": "besik",
+                        "Halka Yol Gösteren Özgürlük": "ozgurluk",
+                        "Sis Denizi Üzerinde Gezgin": "gezgin",
+                        "Savaşçı Temeraire": "temeraire",
+                        "Medusa'nın Salı": "medusa"
+                    };
+
+                    // Sözlükten al veya otomatik oluştur
+                    let dosyaAdi = eserMap[item.title] || item.title.toLowerCase().replace(/ /g, '-');
+
+                    // URL'i oluştur
+                    const detailUrl = `${dosyaAdi}.html`;
 
                     itemsHtml += `
-                        <div class="cart-item" data-index="${index}" onclick="window.location.href='${detailUrl}'" style="cursor:pointer;">
+                        <div class="cart-item" 
+                            data-index="${index}" 
+                            onclick="window.location.href='${detailUrl}'" 
+                            style="cursor:pointer;">
                             <div class="cart-item-img">
                                 <img src="${item.img || 'placeholder.png'}" alt="${item.title}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;" onerror="this.src='https://placehold.co/80x80/1c1610/c9a84c?text=Art'">
                             </div>
@@ -623,51 +659,51 @@
                 updateCartCount();
             });
         </script>
-    <!-- Tab Sesli Okuma -->
-    <script>
-    (function() {
-        var synth = window.speechSynthesis;
-        var lastFocused = null;
-        var usingKeyboard = false;
+        <!-- Tab Sesli Okuma -->
+        <script>
+        (function() {
+            var synth = window.speechSynthesis;
+            var lastFocused = null;
+            var usingKeyboard = false;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') usingKeyboard = true;
-        });
-        document.addEventListener('mousedown', function() {
-            usingKeyboard = false;
-        });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') usingKeyboard = true;
+            });
+            document.addEventListener('mousedown', function() {
+                usingKeyboard = false;
+            });
 
-        function getLabel(el) {
-            if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
-            var id = el.id;
-            if (id) {
-                var lbl = document.querySelector('label[for="' + id + '"]');
-                if (lbl) return lbl.innerText.trim();
+            function getLabel(el) {
+                if (el.getAttribute('aria-label')) return el.getAttribute('aria-label');
+                var id = el.id;
+                if (id) {
+                    var lbl = document.querySelector('label[for="' + id + '"]');
+                    if (lbl) return lbl.innerText.trim();
+                }
+                if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
+                var text = (el.innerText || el.textContent || '').trim();
+                if (text) return text;
+                if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+                return null;
             }
-            if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
-            var text = (el.innerText || el.textContent || '').trim();
-            if (text) return text;
-            if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
-            return null;
-        }
 
-        document.addEventListener('focusin', function(e) {
-            if (!usingKeyboard) return;
-            var el = e.target;
-            var tag = el.tagName;
-            var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
-            if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
-            if (el === lastFocused) return;
-            lastFocused = el;
-            var text = getLabel(el);
-            if (!text) return;
-            synth.cancel();
-            var utt = new SpeechSynthesisUtterance(text);
-            utt.lang = 'tr-TR';
-            utt.rate = 1;
-            synth.speak(utt);
-        });
-    })();
-    </script>
+            document.addEventListener('focusin', function(e) {
+                if (!usingKeyboard) return;
+                var el = e.target;
+                var tag = el.tagName;
+                var readable = ['A','BUTTON','INPUT','SELECT','TEXTAREA','DETAILS','SUMMARY'];
+                if (!readable.includes(tag) && !el.hasAttribute('tabindex')) return;
+                if (el === lastFocused) return;
+                lastFocused = el;
+                var text = getLabel(el);
+                if (!text) return;
+                synth.cancel();
+                var utt = new SpeechSynthesisUtterance(text);
+                utt.lang = 'tr-TR';
+                utt.rate = 1;
+                synth.speak(utt);
+            });
+        })();
+        </script>
     </body>
 </html>

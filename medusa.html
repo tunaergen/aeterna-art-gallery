@@ -4,7 +4,7 @@
         <link rel="icon" type="image/svg+xml" href="favicon.jpeg">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>İnci Küpeli Kız — Johannes Vermeer | ÆTERNA</title>
+        <title>Medusa'nın Salı — Théodore Géricault | ÆTERNA</title>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -340,6 +340,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="user-menu-container">
                     <button class="user-btn" id="userBtn">
                         <i class="far fa-user-circle"></i>
@@ -360,7 +361,7 @@
                             <li class="divider"></li>
                             <li><a href="#" onclick="showToast('Destek talepleri sayfası açılıyor...'); return false;"><i class="fas fa-headset"></i> Destek Taleplerim</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" id="logoutBtn" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+                            <li><a href="#" id="logoutBtn" onclick="logout(); return false;" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
                         </ul>
                     </div>
                 </div>
@@ -377,7 +378,7 @@
                     <h3><i class="fas fa-universal-access"></i> Erişilebilir Arama</h3>
                     <button class="accessibility-close" id="accessibilityClose" aria-label="Kapat">&times;</button>
                 </div>
-                    
+                
                 <div class="accessibility-input-wrapper">
                     <label for="accessibilityInput" style="display:block; margin-bottom:0.8rem; font-size:1rem;">Eser, sanatçı veya dönem ara:</label>
                     <input type="text" id="accessibilityInput" 
@@ -385,7 +386,7 @@
                         autocomplete="off"
                         style="width:100%; padding:0.8rem; font-size:1rem; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#f0e6d0;">
                 </div>
-                    
+                
                 <div class="accessibility-filters">
                     <button class="accessibility-filter-chip active" data-filter="all">Tümü</button>
                     <button class="accessibility-filter-chip" data-filter="rönesans">Rönesans</button>
@@ -395,14 +396,14 @@
                     <button class="accessibility-filter-chip" data-filter="romantizm">Romantizm</button>
                     <button class="accessibility-filter-chip" data-filter="izlenimcilik">İzlenimcilik</button>
                 </div>
-                    
+                
                 <div class="accessibility-results" id="accessibilityResults">
                     <div class="accessibility-placeholder">
                         <i class="fas fa-search"></i>
                         <p>Bir sanat eseri aramak için yazın...</p>
                     </div>
                 </div>
-                    
+                
                 <div class="accessibility-footer">
                     <span>🔍 Tab ile gezin, Enter ile seç, ESC ile kapat</span>
                 </div>
@@ -415,26 +416,26 @@
             <div class="product-detail-container" data-aos="fade-up">
                 <div class="product-image" data-aos="fade-right">
                     <div class="zoom-container">
-                        <img src="inci-kupeli-kiz.png" alt="İnci Küpeli Kız - Johannes Vermeer" class="zoom-img" id="zoomImg">
+                        <img src="medusa.png" alt="Medusa'nın Salı - Théodore Géricault" class="zoom-img" id="zoomImg">
                         <div class="zoom-lens" id="zoomLens"></div>
                     </div>
                     <div class="zoom-result" id="zoomResult"></div>
                 </div>
                 
                 <div class="product-info" data-aos="fade-left">
-                    <div class="product-artist">Johannes Vermeer</div>
-                    <h1 class="product-title">İnci Küpeli Kız</h1>
-                    <div class="product-title-en">Girl with a Pearl Earring</div>
+                    <div class="product-artist">Théodore Géricault</div>
+                    <h1 class="product-title">Medusa'nın Salı</h1>
+                    <div class="product-title-en">The Raft of the Medusa</div>
                     
                     <div class="product-description">
-                        <p>Johannes Vermeer'in başyapıtı olan "İnci Küpeli Kız", Hollanda Altın Çağı'nın en ikonik eserlerinden biridir. "Kuzeyin Mona Lisa'sı" olarak da anılan bu tablo, gizemli bakışları ve ışığın büyülü kullanımıyla sanat tarihinin unutulmaz yüzlerinden biri haline gelmiştir.</p>
-                        <p>Eser, koyu bir arka plan önünde duran genç bir kızın, başını hafifçe çevirip izleyiciye bakmasıyla dikkat çeker. Özellikle parlayan inci küpesi ve sarığındaki canlı mavi pigmentler, Vermeer'in ustalığını gözler önüne serer.</p>
+                        <p>Théodore Géricault'nun başyapıtı "Medusa'nın Salı", Romantizm döneminin en etkileyici ve en tartışmalı eserlerinden biridir. 1819 yılında tamamlanan bu devasa tablo, 1816'da Fransız fırkateyni "Medusa"nın batması ve mürettebatın bir sal üzerinde 13 gün boyunca açlık, susuzluk ve çaresizlikle mücadelesini tasvir eder.</p>
+                        <p>Eser, saldaki hayatta kalanların, ufukta bir gemi gördüklerinde duydukları umut ve çaresizlik anını yakalar. Géricault, bu trajik olayı tüm gerçekliğiyle resmederken, insanın doğa karşısındaki kırılganlığını, umudunu ve dayanıklılığını da gözler önüne sermiştir. Tablo, Romantizm akımının en güçlü ve en duygusal örneklerinden biridir.</p>
                     </div>
                     
                     <div class="product-specs">
                         <div class="spec-row">
                             <span class="spec-label">Yıl</span>
-                            <span class="spec-value">1665</span>
+                            <span class="spec-value">1819</span>
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Teknik</span>
@@ -442,26 +443,24 @@
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Boyutlar</span>
-                            <span class="spec-value">44.5 × 39 cm (17.5 × 15.4 in)</span>
+                            <span class="spec-value">491 × 716 cm (193.3 × 281.9 in)</span>
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Dönem</span>
-                            <span class="spec-value">Barok (Hollanda Altın Çağı)</span>
+                            <span class="spec-value">Romantizm</span>
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Malzeme</span>
-                            <span class="spec-value">Yağlı boya, Kanvas</span>
+                            <span class="spec-value">Tuval üzerine yağlıboya</span>
                         </div>
                     </div>
                     
                     <div class="product-price-section">
                         <div>
-                            <span class="product-price">₺3.314</span>
-                            <span class="product-old-price">₺3.899</span>
-                            <span class="product-discount">%15 İndirim</span>
+                            <span class="product-price">₺7.499</span>
                         </div>
-                        <button class="detail-add-to-cart" id="addToCartBtn" onclick="addToCartAndRedirect('İnci Küpeli Kız')">
-                            <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                        <button class="detail-add-to-cart disabled" id="addToCartBtn" disabled style="background:#5a5a5a; color:#8a8a8a; cursor:not-allowed; opacity:0.6; pointer-events:none;">
+                            <i class="fas fa-times-circle"></i> Stokta Yok
                         </button>
                     </div>
                     
@@ -487,12 +486,12 @@
             <div class="product-detail-container" style="margin-top: 2rem;" data-aos="fade-up">
                 <div class="product-info" style="padding: 2rem;">
                     <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 1.5rem;">Eser Hakkında</h2>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">"İnci Küpeli Kız", Vermeer'in en tanınmış eserlerinden biri olmasının yanı sıra, sanat tarihinin en gizemli portrelerinden biridir. Modelin kimliği tam olarak bilinmemektedir; bazı sanat tarihçileri bunun Vermeer'in en büyük kızı Maria olduğunu düşünmektedir.</p>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">Tablonun en dikkat çekici özelliği, kızın kulağından sarkan büyük inci küpedir. Vermeer, bu inciyi sadece birkaç fırça darbesiyle, beyaz ve gri tonlarını ustalıkla kullanarak resmetmiştir. Ayrıca kızın sarığındaki parlak mavi renk, o dönemde çok değerli olan ultramarin pigmentinden elde edilmiştir.</p>
-                    <p style="color: var(--text); line-height: 1.8;">Eser, 2003 yılında aynı isimle bir filme de uyarlanmış ve uluslararası alanda büyük ilgi görmüştür. Günümüzde Lahey'deki Mauritshuis Müzesi'nde sergilenmekte olup, yılda milyonlarca ziyaretçi tarafından hayranlıkla izlenmektedir.</p>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">"Medusa'nın Salı", Théodore Géricault'nun en büyük ve en önemli eseridir. Tablo, 1816'da Fransız hükümetinin ihmali nedeniyle batmış olan "Medusa" firkateyninin trajik hikayesini anlatır. Géricault, olayın üzerinden sadece iki yıl geçmişken, konuyu titizlikle araştırmış, hayatta kalanlarla görüşmüş ve hatta ölü bedenleri inceleyerek tablosunu hazırlamıştır. Bu araştırmacı yaklaşım, eserin inanılmaz derecede gerçekçi ve etkileyici olmasını sağlamıştır.</p>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 1rem;">Tablonun kompozisyonu, iki zıt piramit şeklinde düzenlenmiştir: soldaki umutsuzluk ve ölüm piramidi ile sağdaki umut ve kurtuluş piramidi. Géricault, bu piramit kompozisyonuyla izleyicinin gözünü, saldaki çaresiz insanlardan ufuktaki kurtarıcı gemiye doğru yönlendirir. Işık kullanımı da etkileyicidir; karanlık ve kasvetli ön plan, aydınlık ve umut dolu arka planla tezat oluşturur. Tablo, aynı zamanda dönemin Fransız toplumundaki siyasi ve sosyal eleştirileri de barındırır.</p>
+                    <p style="color: var(--text); line-height: 1.8;">Günümüzde Paris'teki Louvre Müzesi'nde sergilenen "Medusa'nın Salı", Romantizm sanatının en önemli başyapıtlarından biri olarak kabul edilir. Tablo, 1819'da Paris Salonu'nda sergilendiğinde büyük tartışmalara neden olmuş, hem hayranlık hem de eleştiri toplamıştır. Eser, sadece sanat tarihinde değil, aynı zamanda Fransız tarihinde de önemli bir yere sahiptir. Géricault'nun bu başyapıtı, insanın doğa karşısındaki mücadelesini, umut ve çaresizlik arasındaki ince çizgiyi ve sanatın toplumsal bir ayna olma gücünü gözler önüne seren evrensel bir mesaja sahiptir.</p>
                 </div>
                 <div class="product-image" style="background: none; padding: 1rem;">
-                    <img src="girl-with-a-pearl-earring-johannes-vermeer.jpg" alt="İnci Küpeli Kız detay" style="max-width: 100%;">
+                    <img src="the-raft-of-the-medusa-théodore-géricault.png" alt="Medusa'nın Salı detay" style="max-width: 100%;">
                 </div>
             </div>
         </div>
@@ -591,8 +590,14 @@
                     if (window.products.popular) {
                         foundProduct = window.products.popular.find(p => p.title === title);
                     }
+                    if (!foundProduct && window.products.romantizm) {
+                        foundProduct = window.products.romantizm.tablolar.find(p => p.title === title);
+                    }
                     if (!foundProduct && window.products.barok) {
                         foundProduct = window.products.barok.tablolar.find(p => p.title === title);
+                    }
+                    if (!foundProduct && window.products.ronesans) {
+                        foundProduct = window.products.ronesans.tablolar.find(p => p.title === title);
                     }
                 }
                 
@@ -609,10 +614,12 @@
                 } else {
                     cart.push({
                         title: title,
-                        artist: "Johannes Vermeer",
-                        year: 1665,
-                        price: 3314,
-                        img: "inci-kupeli-kiz.png",
+                        artist: foundProduct ? foundProduct.artist : "Théodore Géricault",
+                        year: foundProduct ? foundProduct.year : 1819,
+                        price: foundProduct ? foundProduct.price : 7499,
+                        oldPrice: foundProduct ? foundProduct.oldPrice : 8299,
+                        img: foundProduct ? foundProduct.img : "medusa.png",
+                        detailPage: foundProduct ? foundProduct.detailPage : "medusa.html",
                         quantity: 1
                     });
                 }
@@ -780,8 +787,10 @@
                     }
                     if (el.getAttribute('placeholder')) return el.getAttribute('placeholder') + ', metin alanı';
                     const text = (el.innerText || el.textContent || '').trim();
-                    if (text) return text;
+                    if (text && text.length < 150) return text;
                     if (el.tagName === 'INPUT') return (el.getAttribute('type') || 'metin') + ' alanı';
+                    if (el.tagName === 'BUTTON') return text || 'buton';
+                    if (el.tagName === 'A') return text || 'bağlantı';
                     return null;
                 }
 
